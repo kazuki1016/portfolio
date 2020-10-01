@@ -12,13 +12,15 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <form method="GET" class ="text-right">   
-            <input type="text" name="serch" placeholder="キーワードを入力">
-            <input type="submit" value="検索">
-          </form>
+          <a class="nav-link" href="<?php print(LOGIN_URL);?>">ログイン</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          ようこそ、<?php print($user['name']); ?>さん。
         </li>
       </ul>
     </div>
   </nav>
-  <p class ="text-right">ようこそ、<?php print($user['name']); ?>さん。</p>
+  <p class ="text-right"></p>
 </header>

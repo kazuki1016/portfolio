@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
-  
+
   <title>〜静岡の抹茶スイーツを堪能しよう〜</title>
   <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'index.css'); ?>">
 </head>
@@ -14,63 +14,46 @@
                 height: 750px;
                 color: white;
         ">
-    <h1>〜ようこそ,静岡の抹茶の世界へ〜</h1>
+    <h1>〜ようこそ,みんなで作る静岡の抹茶の世界へ〜</h1>
   </div>
-  <div class="container" style="max-width: 1500px;" >
+  <div class="container" style="max-width: 1400px;" >
     <div class="row">
       <div class="col-3" style="border:  thin solid grey; margin-right: 30px;"> 
         <h5 class="p-1 mb-1 bg-white text-dark"
             style="text-align: center;
-                   margin-top: 10px">  
-          ★市町村毎に探す
+                  margin-top: 10px">  
+          ★会員登録はこちら👇
         </h5>
-        <div>
-          <p class="p-1 mb-1 bg-success text-white" 
-             style="text-align: center;
-                    margin-top: 10px;">
-             🍵東部、伊豆
-          </p>
-          <ul>
-            <li><a href="#">熱海市</a></li>
-            <li><a href="#">伊豆市</a></li>
-            <li><a href="#">伊東市</a></li>
-            <li><a href="#">河津町</a></li>
-            <li><a href="#">御殿場市</a></li>
-            <li><a href="#">沼津市</a></li>
-            <li><a href="#">富士市</a></li>
-            <li><a href="#">富士宮市</a></li>
-            <li><a href="#">三島市</a></li>
-            <li><a href="#">その他市町村</a></li>
-          </ul>
-          <p class="p-1 mb-1 bg-success text-white" 
-          style="text-align: center;
-                    margin-top: 10px;">
-             🍵中部
-            </p>
-            <ul>
-              <li><a href="#">川根本町</a></li>
-              <li><a href="#">静岡市</a></li>
-              <li><a href="#">島田市</a></li>
-              <li><a href="#">藤枝市</a></li>
-              <li><a href="#">焼津市</a></li>
-              <li><a href="#">吉田町</a></li>
-            </ul>
-          <p class="p-1 mb-1 bg-success text-white" 
-          style="text-align: center;
-                    margin-top: 10px;">
-             🍵西部
-            </p>
-            <ul>
-              <li><a href="#">磐田市</a></li>
-              <li><a href="#">御前崎市</a></li>
-              <li><a href="#">掛川市</a></li>
-              <li><a href="#">菊川市</a></li>
-              <li><a href="#">湖西市</a></li>
-              <li><a href="#">浜松市</a></li>
-              <li><a href="#">袋井市</a></li>
-              <li><a href="#">森町</a></li>
-            </ul>
+
+        <div style="text-align: center; margin: 10px;";>
+          <a class="btn btn-secondary" href="signup.php" role="button" >新規登録</a>
         </div>
+        <h5 class="p-1 mb-1 bg-white text-dark"
+            style="text-align: center;
+                   margin-top: 10px">  
+          ★お店を探す
+        </h5>
+        <form class="form-inline"　action="#" method="GET" style="margin-bottom:10px;">
+          <p>ジャンルから探す</p>
+          <select class="form-control" name="genre">
+            <option disabled selected>選択してください</option>
+            <?php foreach($genres as $genre) { ?>
+              <option value="<?php print h($genre['genre_id']); ?>"><?php print h($genre['genre_name']); ?></option>
+              <?php } ?>
+          </select>
+          <input type="submit" class="btn btn-primary" value="検索" style="margin-left: 10px;">
+        </form>
+        <form class="form-inline"　action="#" method="GET" style="margin-bottom:10px;">
+          <p>エリアから探す</p>
+          <select class="form-control" name="genre">
+            <option disabled selected>選択してください</option>
+            <?php foreach($citys as $city) { ?>
+              <option value="<?php print h($city['city_id']); ?>"><?php print h($city['city_name']); ?></option>
+              <?php } ?>
+          </select>
+          <input type="submit" class="btn btn-primary" value="検索" style="margin-left: 10px;">
+        </form>
+        <a href="add.php">良い店があったらこちらから登録してね！</a>
       </div>
       <div class="col-8" style="border:  thin solid grey;"> 
         <h5 class="p-1 mb-1 bg-white text-dark"
@@ -184,6 +167,5 @@
 
     </div>
   </div>
-  
 </body>
 </html>
