@@ -3,30 +3,19 @@ require_once '../conf/const.php';
 require_once MODEL_PATH . 'functions.php';
 require_once MODEL_PATH . 'user.php';
 
-// session_start();
+session_start();
 
-// if(is_logined() === true){
-//   redirect_to(HOME_URL);
-// }
+if(is_logined() === true){
+  redirect_to(HOME_URL);
+}
 
+var_dump($_POST);
 $name = get_post('name');
 $password = get_post('password');
 $password_confirmation = get_post('password_confirmation');
+$token = get_post('token');
 
 $db = get_db_connect();
 
-try{
-  $result = regist_user($db, $name, $password, $password_confirmation);
-  if( $result=== false){
-    set_error('ユーザー登録に失敗しました。');
-    redirect_to(SIGNUP_URL);
-  }
-}catch(PDOException $e){
-  set_error('ユーザー登録に失敗しました。');
-  redirect_to(SIGNUP_URL);
-}
 
-set_message('ユーザー登録が完了しました。');
-login_as($db, $name, $password);
-redirect_to(HOME_URL);
 include_once VIEW_PATH . 'signup_process_view.php';

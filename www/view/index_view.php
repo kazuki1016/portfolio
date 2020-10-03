@@ -17,18 +17,19 @@
     <h1>〜ようこそ,みんなで作る静岡の抹茶の世界へ〜</h1>
   </div>
   <div class="container" style="max-width: 1400px;" >
+    <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <div class="row">
+
       <div class="col-3" style="border:  thin solid grey; margin-right: 30px;"> 
         <div>
           <?php if(is_logined() === true) {?>
             <h5 class="p-1 mb-1 bg-white text-dark"
             style="text-align: center;
                   margin-top: 10px">  
-              ようこそ、<?php print($user['name']); ?>さん。
+              ようこそ、<?php print($user['user_name']); ?>さん。
               <div style="text-align: center; margin: 10px;";>
                 <a class="btn btn-primary" href="mypage.php" role="button" >マイページへ</a>
               </div>
-
             </h5>
           <?php }else { ?>
             <h5 class="p-1 mb-1 bg-white text-dark"

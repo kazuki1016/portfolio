@@ -7,9 +7,9 @@ function get_user($db, $user_id){
     SELECT
       user_id, 
       user_name,
-      password,
+      pass
     FROM
-      users
+      userinfo
     WHERE
       user_id = ?
     LIMIT 1
@@ -23,11 +23,11 @@ function get_user_by_name($db, $name){
     SELECT
       user_id, 
       user_name,
-      password,
+      pass
     FROM
-      users
+      userinfo
     WHERE
-      name = ?
+      user_name = ?
     LIMIT 1
   ";
 
@@ -36,7 +36,7 @@ function get_user_by_name($db, $name){
 
 function login_as($db, $name, $password){
   $user = get_user_by_name($db, $name);
-  if($user === false || $user['password'] !== $password){
+  if($user === false || $user['pass'] !== $password){
     return false;
   }
   set_session('user_id', $user['user_id']);
