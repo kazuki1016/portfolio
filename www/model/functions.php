@@ -1,10 +1,5 @@
 <?php
 
-// var_dumpする関数
-function dd($var){
-  var_dump($var);
-  exit();
-}
 
 // クロスサイトスクリプト対策として、出力する文字をエスケープ処理
 function h($item){

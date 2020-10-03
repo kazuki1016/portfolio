@@ -1,7 +1,7 @@
 <?php
 require_once '../conf/const.php';
 require_once MODEL_PATH . 'functions.php';
-require_once MODEL_PATH . 'user.php';
+// require_once MODEL_PATH . 'user.php';
 
 // session_start();
 
@@ -9,10 +9,11 @@ require_once MODEL_PATH . 'user.php';
 //   redirect_to(HOME_URL);
 // }
 
-// トークンの生成
-$token = get_csrf_token();
-
-include_once VIEW_PATH . 'signup_view.php';
+$name = get_post('name');
+$password = get_post('password');
 
 
+
+
+include_once VIEW_PATH . 'singup_comp_view.php';
 
