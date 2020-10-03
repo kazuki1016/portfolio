@@ -19,14 +19,31 @@
   <div class="container" style="max-width: 1400px;" >
     <div class="row">
       <div class="col-3" style="border:  thin solid grey; margin-right: 30px;"> 
-        <h5 class="p-1 mb-1 bg-white text-dark"
+        <div>
+          <?php if(is_logined() === true) {?>
+            <h5 class="p-1 mb-1 bg-white text-dark"
             style="text-align: center;
                   margin-top: 10px">  
-          ★会員登録はこちら👇
-        </h5>
+              ようこそ、<?php print($user['name']); ?>さん。
+              <div style="text-align: center; margin: 10px;";>
+                <a class="btn btn-primary" href="mypage.php" role="button" >マイページへ</a>
+              </div>
 
-        <div style="text-align: center; margin: 10px;";>
-          <a class="btn btn-secondary" href="signup.php" role="button" >新規登録</a>
+            </h5>
+          <?php }else { ?>
+            <h5 class="p-1 mb-1 bg-white text-dark"
+            style="text-align: center;
+                  margin-top: 10px">  
+              ようこそ、ゲストさん。<br><br>
+              ★会員の方はこちら👇
+              <div style="text-align: center; margin: 10px;";>
+                <a class="btn btn-primary" href="login.php" role="button" >ログイン</a>
+              </div>
+              ★会員登録はこちら👇
+              <div style="text-align: center; margin: 10px;";>
+                <a class="btn btn-secondary" href="signup.php" role="button" >新規登録</a>
+              </div>
+            <?php } ?>
         </div>
         <h5 class="p-1 mb-1 bg-white text-dark"
             style="text-align: center;
@@ -44,7 +61,7 @@
           <input type="submit" class="btn btn-primary" value="検索" style="margin-left: 10px;">
         </form>
         <form class="form-inline"　action="#" method="GET" style="margin-bottom:10px;">
-          <p>エリアから探す</p>
+          <p>市町村から探す</p>
           <select class="form-control" name="genre">
             <option disabled selected>選択してください</option>
             <?php foreach($citys as $city) { ?>
@@ -53,7 +70,6 @@
           </select>
           <input type="submit" class="btn btn-primary" value="検索" style="margin-left: 10px;">
         </form>
-        <a href="add.php">良い店があったらこちらから登録してね！</a>
       </div>
       <div class="col-8" style="border:  thin solid grey;"> 
         <h5 class="p-1 mb-1 bg-white text-dark"
@@ -167,5 +183,7 @@
 
     </div>
   </div>
+  
 </body>
+<?php include VIEW_PATH . 'templates/footer.php'; ?>
 </html>

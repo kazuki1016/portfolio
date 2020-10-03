@@ -10,8 +10,7 @@
   <div class="container">
     <h1>ログイン</h1>
 
-    <?php include VIEW_PATH . 'templates/messages.php'; ?>
-
+composer --version
     <form method="post" action="login_process.php" class="login_form mx-auto">
       <div class="form-group">
         <label for="name">名前: </label>

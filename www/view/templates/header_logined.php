@@ -10,16 +10,6 @@
           <a class="nav-link" href="<?php print(LOGOUT_URL);?>">ログアウト</a>
         </li>
       </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="<?php print(LOGIN_URL);?>">ログイン</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          ようこそ、<?php print($user['name']); ?>さん。
-        </li>
-      </ul>
     </div>
   </nav>
   <p class ="text-right"></p>

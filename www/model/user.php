@@ -6,9 +6,8 @@ function get_user($db, $user_id){
   $sql = "
     SELECT
       user_id, 
-      name,
+      user_name,
       password,
-      type
     FROM
       users
     WHERE
@@ -23,9 +22,8 @@ function get_user_by_name($db, $name){
   $sql = "
     SELECT
       user_id, 
-      name,
+      user_name,
       password,
-      type
     FROM
       users
     WHERE
@@ -59,9 +57,6 @@ function regist_user($db, $name, $password, $password_confirmation) {
   return insert_user($db, $name, $password);
 }
 
-function is_admin($user){
-  return $user['type'] === USER_TYPE_ADMIN;
-}
 
 function is_valid_user($name, $password, $password_confirmation){
   // 短絡評価を避けるため一旦代入。
@@ -104,7 +99,7 @@ function is_valid_password($password, $password_confirmation){
 function insert_user($db, $name, $password){
   $sql = "
     INSERT INTO
-      users(name, password)
+      userinfo(user_name, pass)
     VALUES (?, ?);
   ";
 

@@ -7,7 +7,7 @@ require_once '../conf/const.php';
 // if(is_logined() === true){
 //   redirect_to(HOME_URL);
 // }
-// // トークンの生成
+// トークンの生成
 // $token = get_csrf_token();
 
 
