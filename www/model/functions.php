@@ -44,12 +44,14 @@ function get_post($name){
   return '';
 }
 
+//POSTされたファイルを格納
 function get_file($name){
   if(isset($_FILES[$name]) === true){
     return $_FILES[$name];
   };
   return array();
 }
+
 
 function get_session($name){
   if(isset($_SESSION[$name]) === true){
@@ -121,8 +123,6 @@ function delete_image($filename){
   return false;
   
 }
-
-
 
 function is_valid_length($string, $minimum_length, $maximum_length = PHP_INT_MAX){
   $length = mb_strlen($string);
