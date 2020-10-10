@@ -21,6 +21,8 @@ define('LOGOUT_URL', '/logout.php');
 define('HOME_URL', '/index.php');
 define('FINISH_URL', '/finish.php');
 define('ADMIN_URL', '/admin.php');
+define('MYPAGE_URL', '/mypage.php');
+define('ADD_URL', '/add.php');
 
 define('REGEXP_ALPHANUMERIC', '/\A[0-9a-zA-Z]+\z/');
 define('REGEXP_POSITIVE_INTEGER', '/\A([1-9][0-9]*|0)\z/');
@@ -31,19 +33,24 @@ define('USER_NAME_LENGTH_MAX', 100);
 define('USER_PASSWORD_LENGTH_MIN', 6);
 define('USER_PASSWORD_LENGTH_MAX', 100);
 
-define('USER_TYPE_ADMIN', 1);
-define('USER_TYPE_NORMAL', 2);
+// define('USER_TYPE_ADMIN', 1);
+// define('USER_TYPE_NORMAL', 2);
 
-define('ITEM_NAME_LENGTH_MIN', 1);
-define('ITEM_NAME_LENGTH_MAX', 100);
+define('SHOP_NAME_LENGTH_MIN', 1);
+define('SHOP_NAME_LENGTH_MAX', 50);
+define('SHOP_DETAIL_LENGTH_MIN', 1);
+define('SHOP_DETAIL_LENGTH_MAX', 200);
 
-define('ITEM_STATUS_OPEN', 1);
-define('ITEM_STATUS_CLOSE', 0);
+// define('PERMITTED_ITEM_STATUSES', array(
+//   'open' => 1,
+//   'open' => 1,
+//   'open' => 1,
+//   'open' => 1,
+//   'close' => 0,
+// ));
 
-define('PERMITTED_ITEM_STATUSES', array(
-  'open' => 1,
-  'close' => 0,
-));
+// define('ITEM_STATUS_OPEN', 1);
+// define('ITEM_STATUS_CLOSE', 0);
 
 define('PERMITTED_IMAGE_TYPES', array(
   IMAGETYPE_JPEG => 'jpg',

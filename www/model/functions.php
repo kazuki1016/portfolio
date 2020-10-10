@@ -143,7 +143,7 @@ function is_valid_format($string, $format){
 
 
 function is_valid_upload_image($image){
-  if(is_uploaded_file($image['tmp_name']) === false){
+  if(is_uploaded_file($image['tmp_name']) === false){  //is_uploaded_fileは定義された関数、アップロードされたかどうかを確認する関数
     set_error('ファイル形式が不正です。');
     return false;
   }

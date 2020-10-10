@@ -4,7 +4,8 @@
   <?php include VIEW_PATH . 'templates/head.php'; ?>
 
   <title>〜静岡の抹茶スイーツを堪能しよう〜</title>
-  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'index.css'); ?>">
+  <link rel="stylesheet" href="../html/assets/css/index.css">
+
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
@@ -13,6 +14,7 @@
                 background-size:cover;
                 height: 750px;
                 color: white;
+                
         ">
     <h1>〜ようこそ,みんなで作る静岡の抹茶の世界へ〜</h1>
   </div>
@@ -27,10 +29,12 @@
             style="text-align: center;
                   margin-top: 10px">  
               ようこそ、<?php print($user['user_name']); ?>さん。
-              <div style="text-align: center; margin: 10px;";>
-                <a class="btn btn-primary" href="mypage.php" role="button" >マイページへ</a>
-              </div>
             </h5>
+            <div style="text-align: center;">
+              <form method="POST" action="mypage.php">
+                <button type="submit" class="btn btn-success w-75" >マイページへ</button>           
+              </form> 
+            </div>
           <?php }else { ?>
             <h5 class="p-1 mb-1 bg-white text-dark"
             style="text-align: center;
@@ -55,7 +59,7 @@
           <p>ジャンルから探す</p>
           <select class="form-control" name="genre">
             <option disabled selected>選択してください</option>
-            <?php foreach($genres as $genre) { ?>
+            <?php foreach($_SESSION['genres'] as $genre) { ?>
               <option value="<?php print h($genre['genre_id']); ?>"><?php print h($genre['genre_name']); ?></option>
               <?php } ?>
           </select>
@@ -65,7 +69,7 @@
           <p>市町村から探す</p>
           <select class="form-control" name="genre">
             <option disabled selected>選択してください</option>
-            <?php foreach($citys as $city) { ?>
+            <?php foreach($_SESSION['citys'] as $city) { ?>
               <option value="<?php print h($city['city_id']); ?>"><?php print h($city['city_name']); ?></option>
               <?php } ?>
           </select>
