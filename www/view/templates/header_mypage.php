@@ -10,6 +10,11 @@
           <a class="nav-link" href="<?php print(SIGNUP_URL);?>">サインアップ</a>
         </li>
       </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="<?php print(MYPAGE_URL);?>"><?php print($user['user_name']); ?>さん</a>
+        </li>
+      </ul>
     </div>
   </nav>
 </header>

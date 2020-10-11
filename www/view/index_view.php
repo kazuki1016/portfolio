@@ -2,57 +2,193 @@
 <html lang="ja">
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
-  
-  <title>商品一覧</title>
-  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'index.css'); ?>">
+
+  <title>〜静岡の抹茶スイーツを堪能しよう〜</title>
+  <link rel="stylesheet" href="../html/assets/css/index.css">
+
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
-  
-
-  <div class="container">
-    <h1>商品一覧</h1>
-    <form method="GET" class ="text-right">   <!-- bootstrapで右寄せのクラス-->
-      <select name="order">
-        <option value="new_order">新着順</option>
-        <option value="cheap_order">価格の安い順</option>
-        <option value="expensive_order">価格の高い順</option>
-      </select>
-      <input type="submit" value="並び替え">
-    </form>
+  <div class ="jumbotron text-center"  
+         style="background:url(top2.jpeg); 
+                background-size:cover;
+                height: 750px;
+                color: white;
+                
+        ">
+    <h1>〜ようこそ,みんなで作る静岡の抹茶の世界へ〜</h1>
+  </div>
+  <div class="container" style="max-width: 1400px;" >
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
+    <div class="row">
 
-    <div class="card-deck">
-      <div class="row">
-      <?php foreach($items as $item){ ?>
-        <div class="col-6 item">
-          <div class="card h-100 text-center">
-            <div class="card-header">
-           <!-- 商品表示部分にh関数（クロスサイトスクリプト対策)-->
-              <?php print h($item['name']); ?>
+      <div class="col-3" style="border:  thin solid grey; margin-right: 30px;"> 
+        <div>
+          <?php if(is_logined() === true) {?>
+            <h5 class="p-1 mb-1 bg-white text-dark"
+            style="text-align: center;
+                  margin-top: 10px">  
+              ようこそ、<?php print($user['user_name']); ?>さん。
+            </h5>
+            <div style="text-align: center;">
+              <form method="POST" action="mypage.php">
+                <button type="submit" class="btn btn-success w-75" >マイページへ</button>           
+              </form> 
             </div>
-            <figure class="card-body">
-              <img class="card-img" src="<?php print h(IMAGE_PATH . $item['image']); ?>">
-              <figcaption>
-                <?php print h(number_format($item['price'])); ?>円
-                <?php if($item['stock'] > 0){ ?>
-                  <form action="index_add_cart.php" method="post">
-                    <input type="submit" value="カートに追加" class="btn btn-primary btn-block">
-                    <input type="hidden" name="item_id" value="<?php print h($item['item_id']); ?>">
-                    <!-- クロスサイトリクエストフォージェリ対策、生成したトークンを遷移先へ送る -->
-                    <input type="hidden" name ="token"  value="<?php print h($token);?>" >
-                  </form>
-                <?php } else { ?>
-                  <p class="text-danger">現在売り切れです。</p>
-                <?php } ?>
-              </figcaption>
-            </figure>
-          </div>
+          <?php }else { ?>
+            <h5 class="p-1 mb-1 bg-white text-dark"
+            style="text-align: center;
+                  margin-top: 10px">  
+              ようこそ、ゲストさん。<br><br>
+              ★会員の方はこちら👇
+              <div style="text-align: center; margin: 10px;";>
+                <a class="btn btn-primary" href="login.php" role="button" >ログイン</a>
+              </div>
+              ★会員登録はこちら👇
+              <div style="text-align: center; margin: 10px;";>
+                <a class="btn btn-secondary" href="signup.php" role="button" >新規登録</a>
+              </div>
+            <?php } ?>
         </div>
-      <?php } ?>
+        <h5 class="p-1 mb-1 bg-white text-dark"
+            style="text-align: center;
+                   margin-top: 10px">  
+          ★お店を探す
+        </h5>
+        <form class="form-inline"　action="#" method="GET" style="margin-bottom:10px;">
+          <p>ジャンルから探す</p>
+          <select class="form-control" name="genre">
+            <option disabled selected>選択してください</option>
+            <?php foreach($_SESSION['genres'] as $genre) { ?>
+              <option value="<?php print h($genre['genre_id']); ?>"><?php print h($genre['genre_name']); ?></option>
+              <?php } ?>
+          </select>
+          <input type="submit" class="btn btn-primary" value="検索" style="margin-left: 10px;">
+        </form>
+        <form class="form-inline"　action="#" method="GET" style="margin-bottom:10px;">
+          <p>市町村から探す</p>
+          <select class="form-control" name="genre">
+            <option disabled selected>選択してください</option>
+            <?php foreach($_SESSION['citys'] as $city) { ?>
+              <option value="<?php print h($city['city_id']); ?>"><?php print h($city['city_name']); ?></option>
+              <?php } ?>
+          </select>
+          <input type="submit" class="btn btn-primary" value="検索" style="margin-left: 10px;">
+        </form>
       </div>
+      <div class="col-8" style="border:  thin solid grey;"> 
+        <h5 class="p-1 mb-1 bg-white text-dark"
+            style="margin-top: 10px;
+                  ">  
+          ★新着情報
+       </h5>
+       <div>
+        <table class="table table-borderless" style="text-align: center;">
+          <thead>
+            <tr>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+            </tr>
+          </tbody>
+        </table>
+       </div>
+       <h5 class="p-1 mb-1 bg-white text-dark"
+       style="margin-top: 10px;
+             ">  
+     ★トピックス
+       </h5>
+       <div>
+        <table class="table table-borderless" style="text-align: center;">
+          <thead>
+            <tr>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+            </tr>
+          </tbody>
+        </table>
+       </div>
+       <h5 class="p-1 mb-1 bg-white text-dark"
+       style="margin-top: 10px;
+             ">  
+     ★あなたへのオススメ抹茶スイーツ
+       </h5>
+       <div>
+        <table class="table table-borderless" style="text-align: center;">
+          <thead>
+            <tr>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+            </tr>
+          </tbody>
+        </table>
+       </div>
+       <h5 class="p-1 mb-1 bg-white text-dark"
+       style="margin-top: 10px;
+             ">  
+     ★Twitter情報
+       </h5>
+       <div>
+        <table class="table table-borderless" style="text-align: center;">
+          <thead>
+            <tr>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+              <th>写真</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+              <td>説明</td>
+            </tr>
+          </tbody>
+        </table>
+       </div>
+
     </div>
   </div>
   
 </body>
+<?php include VIEW_PATH . 'templates/footer.php'; ?>
 </html>
