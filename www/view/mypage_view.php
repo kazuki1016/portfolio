@@ -23,6 +23,9 @@
     margin-right: auto;
     margin-bottom: 40px;
   } */
+  h3{
+    padding-top: 20px;
+  }
   .nav__item {
       display: table-cell;
       margin-left: auto;
@@ -53,7 +56,6 @@
     /* width: 80%; */
     
   }
-  
   .nav_shop_item a {
     display: block;
     padding: 15px 30px;
@@ -65,12 +67,38 @@
   .table th{
     border:none;
   } 
+  .table th{
+    text-align: center;
+  } 
+  .table td{
+    width:70%;
+    vertical-align:middle;
+    padding: 20px 10px;
+  } 
+  .table a{
+    font-size: 25px;
+    padding-left: 0.5em;
+    border-left: solid 0.7em palevioletred;
+  }
+  .table img{
+    max-width: 100%;
+  }
+  .mypage_form{
+    display:inline-flex;  
+  }
+  .btn_mypage{
+    margin-right: 20px;
+  }
+  .genre_city{
+    text-align: center;
+  }
 
 </style>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <div class="container " >
-    <h2><?php print($user['user_name']); ?>さんのマイページ</h2>
+    <h3><?php print h($user['user_name']); ?>さんのマイページ</h2>
+    <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <div class="row main">
       <div class="col-7 nav__item">
           <li class="nav__item"><a href="mypage.php">マイページトップへ</a></li>
@@ -79,7 +107,6 @@
 
       </div>
   </div>
-
   <div class="main_border">
       <h5>投稿したお店</h5>
       </div>
@@ -92,51 +119,25 @@
             </tr>
           </thead>
           <tbody>
-            <!-- ここでforeach -->
+           <?php foreach($my_shoplists as $my_shoplist){?>
             <tr>
-              <td><a href="shop.php?shop_id=<?php print $shop['shop_id']?>">ななや</a></td>
-              <td>アイス/藤枝市</td>
+              <td><a href="shop.php?shop_id=<?php print h($my_shoplist['shop_id'])?>"><?php print h($my_shoplist['shop_name'])?></a></td>
+              <td class="genre_city"><?php h(print $my_shoplist['genre_name'])?>/<?php print h($my_shoplist['city_name'])?></td>
               <td>
-                <div style="display:inline-flex">
-                  <form method="POST" action="edit.php"><input type="submit" value="編集する" class="btn btn-primary"><input type="hidden" value=""></form>
-                  <form method="POST" action="bookmark.php"><input type="submit" value="❤お気に入りへ" class="btn btn-success"><input type="hidden" value=""></form>
+                <div class="mypage_form">
+                  <form method="POST" action="edit.php"><input type="submit" value="編集する" class="btn btn-primary btn_mypage"><input type="hidden" value=""></form>
+                  <form method="POST" action="bookmark.php"><input type="submit" value="❤お気に入りへ" class="btn btn-success btn_mypage"><input type="hidden" value=""></form>
+                  <form method="POST" action="mypage_delete.php"><input type="submit" value="お店の削除" class="btn btn-secondary btn_mypage"><input type="hidden" value=""></form>
                 </div>
               </td>
             </tr>
             <tr>
-              <td><img src="top.jpg"></td>
-              <td colspan="2">銭湯を改装したため、それが店名『ニューヨーク ジョー（入浴場） エクスチェンジ』となっているお店で、お店に入った瞬間、開放的な空間が広がり、もと銭湯だった空間に、多数のアイテムが並べられているという不思議で面白い内装です。 アイテムを売りに来た場合、商品と交換（トレード）できるスタイルが魅力的ですが、店内の商品が全体的にリーズナブルなのも魅力です。 商品はインポート、ユーズド、ノーブランドに関わらず洋服からバッグや靴、帽子、アクセサリーなどを扱ってますが、特に、Vivienne westwood、Dr.Martens、MARC BY MARC JACOBS、adidasなど、現行のブランド品は、他店のリサイクルショップと比較してもかなりの低価格となっています。 毎月第一日曜日には、全商品半額セール「The First Sunday SALE」が開催され、行列ができる程の盛況ぶりになります。スタッフの方は、皆さん明るくて元気がよく、店内は常に活気が溢れていることもあり、アイテムを売りに来た方も買いにきた方も、どなたでも楽しめるお店です。</td>
-            </tr>
-            <!-- ここまでforeach -->
-            <tr>
-              <td><a href="shop.php?shop_id=<?php print $shop['shop_id']?>">ななや</a></td>
-              <td>アイス/藤枝市</td>
-              <td>
-                <div style="display:inline-flex">
-                  <form method="POST" action="edit.php"><input type="submit" value="編集する" class="btn btn-primary"><input type="hidden" value=""></form>
-                  <form method="POST" action="bookmark.php"><input type="submit" value="❤お気に入りへ" class="btn btn-success"><input type="hidden" value=""></form>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><img src="top.jpg"></td>
-              <td colspan="2">銭湯を改装したため、それが店名『ニューヨーク ジョー（入浴場） エクスチェンジ』となっているお店で、お店に入った瞬間、開放的な空間が広がり、もと銭湯だった空間に、多数のアイテムが並べられているという不思議で面白い内装です。 アイテムを売りに来た場合、商品と交換（トレード）できるスタイルが魅力的ですが、店内の商品が全体的にリーズナブルなのも魅力です。 商品はインポート、ユーズド、ノーブランドに関わらず洋服からバッグや靴、帽子、アクセサリーなどを扱ってますが、特に、Vivienne westwood、Dr.Martens、MARC BY MARC JACOBS、adidasなど、現行のブランド品は、他店のリサイクルショップと比較してもかなりの低価格となっています。 毎月第一日曜日には、全商品半額セール「The First Sunday SALE」が開催され、行列ができる程の盛況ぶりになります。スタッフの方は、皆さん明るくて元気がよく、店内は常に活気が溢れていることもあり、アイテムを売りに来た方も買いにきた方も、どなたでも楽しめるお店です。</td>
-            </tr>
-            
+              <td><img src="<?php print h(IMAGE_PATH . $my_shoplist['filename'])?>"></td>
+              <td colspan="2"><?php print h($my_shoplist['shop_detail'])?></td>
+            </tr>            
+            <?php } ?>
           </tbody>
         </table>
-        <!-- <ul class="nav_shop">
-          <li class="nav_shop_set">店名</li>
-          <li class="nav_shop_set">ジャンル/市町村名</li>
-          <form action="edit.php" method="POST">
-            <input type="submit" class="btn btn-primary" value="編集する">
-          </form>
-        </ul>
-        <ul class="nav_shop">
-          <li class="nav_shop_set">ななや</li>
-          <li class="nav_shop_set">アイス/藤枝市</li>
-          <li class="nav_shop_set"></li>
-        </ul> -->
       </div>
     </div>
   </div>

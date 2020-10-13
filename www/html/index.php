@@ -17,7 +17,6 @@ $db = get_db_connect();
 // // トークンの生成
 $token = get_csrf_token();
 $user = get_login_user($db);
-var_dump($user);
 $_SESSION['genres'] = g($db);
 $_SESSION['citys'] = get_citys($db);
 
