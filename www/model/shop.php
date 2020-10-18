@@ -7,6 +7,7 @@ require_once MODEL_PATH . 'city.php';
 // DB利用
 // ユーザーが登録したお店一覧を取得する。
 
+
 function get_my_shoplist($db, $user_id){
   $sql = "
     SELECT
@@ -27,30 +28,31 @@ function get_my_shoplist($db, $user_id){
     WHERE
       user_id = ?
   ";
-
   return fetch_all_query($db, $sql, array($user_id));
 }
 
-// function get_items($db, $is_open = false){
-//   $sql = '
-//     SELECT
-//       item_id, 
-//       name,
-//       stock,
-//       price,
-//       image,
-//       status
-//     FROM
-//       items
-//   ';
-//   if($is_open === true){
-//     $sql .= '
-//       WHERE status = 1
-//       ORDER BY item_id DESC
-//     ';
-//   }
-//   return fetch_all_query($db, $sql);
-// }
+function get_shop_data($db, $shop_id){
+  $sql = "
+    SELECT
+      shops.shop_id, 
+      shops.shop_name,
+      shops.filename,
+      shops.shop_detail,
+      citys.city_id,
+      citys.city_name,
+      genres.genre_id,
+      genres.genre_name
+    FROM
+      (( shops 
+    INNER JOIN 
+        citys ON shops.city_id = citys.city_id)
+    INNER JOIN 
+      genres ON shops.genre_id = genres.genre_id)
+    WHERE
+      shop_id = ?
+  ";
+  return fetch_all_query($db, $sql, array($shop_id));
+}
 
 // //並び替えのSQL
 // function cheap_order_items($db){
@@ -113,7 +115,6 @@ function regist_shop_transaction($db, $shop_name, $genre_id, $city_id, $shop_det
   }
   $db->rollback();
   return false;
-  
 }
 
 function insert_shop($db, $shop_name, $genre_id, $city_id, $shop_detail, $filename, $user_id){
@@ -190,10 +191,6 @@ function insert_shop($db, $shop_name, $genre_id, $city_id, $shop_detail, $filena
 
 
 // 非DB
-
-// function is_open($item){
-//   return $item['status'] === 1;
-// }
 
 function validate_shop($shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $shop_detail, $filename, $user_id){  
   $is_valid_shop_name = is_valid_shop_name($shop_name);

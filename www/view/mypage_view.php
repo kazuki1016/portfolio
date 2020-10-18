@@ -75,7 +75,7 @@
     vertical-align:middle;
     padding: 20px 10px;
   } 
-  .table a{
+  .shop_list a{
     font-size: 25px;
     padding-left: 0.5em;
     border-left: solid 0.7em palevioletred;
@@ -114,15 +114,17 @@
           <thead>
             <tr>
               <th>店名</th>
-              <th>ジャンル</th>
+              <th>ジャンル/市町村</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
            <?php foreach($my_shoplists as $my_shoplist){?>
             <tr>
-              <td><a href="shop.php?shop_id=<?php print h($my_shoplist['shop_id'])?>"><?php print h($my_shoplist['shop_name'])?></a></td>
-              <td class="genre_city"><?php h(print $my_shoplist['genre_name'])?>/<?php print h($my_shoplist['city_name'])?></td>
+              <td class="shop_list"><a href="shop.php?shop_id=<?php print h($my_shoplist['shop_id'])?>"><?php print h($my_shoplist['shop_name'])?></a></td>
+              <td class="genre_city"><a href="shop.php?genre_name=<?php print h($my_shoplist['genre_name'])?>"><?php print h($my_shoplist['genre_name'])?></a>/
+                                     <a href="shop.php?city_name=<?php print h($my_shoplist['city_name'])?>"><?php print h($my_shoplist['city_name'])?></a>
+              </td>
               <td>
                 <div class="mypage_form">
                   <form method="POST" action="edit.php"><input type="submit" value="編集する" class="btn btn-primary btn_mypage"><input type="hidden" value=""></form>
