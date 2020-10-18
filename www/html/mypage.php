@@ -3,13 +3,13 @@ require_once '../conf/const.php';
 require_once MODEL_PATH . 'functions.php';
 require_once MODEL_PATH . 'user.php';
 require_once MODEL_PATH . 'shop.php';
-// require_once MODEL_PATH . 'city.php';
+require_once MODEL_PATH . 'city.php';
 
 session_start();
 
-if(is_logined() === false){
-  redirect_to(HOME_URL);
-}
+// if(is_logined() === false){
+//   redirect_to(HOME_URL);
+// }
 $db = get_db_connect();
 
 // // トークンの生成

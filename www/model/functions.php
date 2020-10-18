@@ -29,7 +29,8 @@ function is_valid_csrf_token($token){
   return $token === get_session('csrf_token');
 }
 
-function get_get($name){
+// GETされた値を得る関数
+function get_data($name){
   if(isset($_GET[$name]) === true){
     return $_GET[$name];
   };
@@ -109,9 +110,16 @@ function get_random_string($length = 20){
   return substr(base_convert(hash('sha256', uniqid()), 16, 36), 0, $length);
 }
 
+// お店投稿用の画像ディレクトリ
 function save_image($image, $filename){
   return move_uploaded_file($image['tmp_name'], IMAGE_DIR . $filename);
 }
+
+// コメント投稿用の画像ディレクトリ
+function save_comment_image($image, $filename){
+  return move_uploaded_file($image['tmp_name'], COMMENT_IMAGE_DIR . $filename);
+}
+
 
 function delete_image($filename){
   if(file_exists(IMAGE_DIR . $filename) === true){
