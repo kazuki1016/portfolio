@@ -30,98 +30,88 @@ function insert_comment_image($db, $comment_id, $filename){
   return execute_query($db, $sql, array($comment_id, $filename));
 }
 
+/** コメント投稿をデータベースへ追加する処理＝regist_comment
+ * 1：バリデーションの処理=validate_comment
+ * 2：実際に登録する処理＝insert_comment
+*/
+function regist_comment($db, $user_id, $shop_id, $comment_title, $comment_body){
+  if(validate_comment($user_id, $shop_id, $comment_title, $comment_body) === false){
+    return false;
+  }
+  return insert_comment($db, $user_id, $shop_id, $comment_title, $comment_body);
+}
 
+function validate_comment($user_id, $shop_id, $comment_title, $comment_body){  
+  $is_valid_user_id = is_valid_user_id($user_id);
+  $is_valid_shop_id = is_valid_shop_id($shop_id);
+  $is_valid_comment_title = is_valid_comment_title($comment_title);
+  $is_valid_comment_body = is_valid_comment_body($comment_body);
+  
+  return $is_valid_user_id
+  && $is_valid_shop_id
+  && $is_valid_city_id
+  && $is_valid_comment_title
+  && $is_valid_comment_body;
+}
+
+// 登録者のバリデーション
+function is_valid_user_id($user_id){
+  $is_valid = true;
+  if(is_positive_integer($user_id) === false){
+    set_error('不正なユーザーです');
+    $is_valid = false;
+  }
+  return $is_valid;
+}
+
+// お店のバリデーション
+function is_valid_shop_id($shop_id){
+  $is_valid = true;
+  if(is_positive_integer($shop_id) === false){
+    set_error('登録されていないお店です');
+    $is_valid = false;
+  }
+  return $is_valid;
+}
+
+// 題名のバリデーション
+function is_valid_comment_title($comment_title){
+  $is_valid = true;
+  if(is_valid_length($comment_title, COMMENT_TITLE_LENGTH_MIN, COMMENT_TITLE_LENGTH_MAX) === false){
+    set_error('店名は'. COMMENT_TITLE_LENGTH_MIN . '文字以上、' . COMMENT_TITLE_LENGTH_MAX . '文字以内にしてください。');
+    $is_valid = false;
+  }
+  return $is_valid;
+}
+
+// 本文のバリデーション
+function is_valid_comment_body($comment_body){
+  $is_valid = true;
+  if(is_valid_length($comment_title, COMMENT_BODY_LENGTH_MIN, COMMENT_BODY_LENGTH_MAX) === false){
+    set_error('店名は'. COMMENT_BODY_LENGTH_MIN . '文字以上、' . COMMENT_BODY_LENGTH_MAX . '文字以内にしてください。');
+    $is_valid = false;
+  }
+  return $is_valid;
+}
+// ここまでがコメント投稿をデータベースへ追加する処理
+
+/** コメント画像をデータベースへ追加する処理＝regist_comment_image
+ * 1：バリデーションの処理=validate_comment_image
+ * 2：実際に登録する処理＝insert_comment_image
+*/
 function regist_comment_image($db, $comment_id, $file_data){
   $filename = get_upload_filename($file_data);
+  if(validate_comment_image($filename)===false){
+    return false;
+  }
   return regist_comment_image_transaction($db, $comment_id, $file_data, $filename);
 }
 
-function regist_comment_image_transaction($db, $comment_id, $comment_image, $filename){
-  if(insert_comment_image($db, $comment_id, $filename) 
-  && save_comment_image($comment_image, $filename)===false){
-  return false;
+function regist_comment_image_transaction($db, $comment_id, $file_data, $filename){
+  if(insert_comment_image($db, $comment_id, $filename) && save_comment_image($file_data, $filename)===false){
+    return false;
   } else{
-  return true;
+    return true;
   }
 }
-
-
-// 口コミ登録関係
-// function regist_comment($db, $user_id, $shop_id, $comment_title, $comment_body){
-//   // $filename = get_upload_filename($image);
-//   if(validate_comment($user_id, $shop_id, $comment_title, $comment_body) === false){
-//     return false;
-//   }
-//   return regist_shop_transaction($db, $shop_name, $genre_id, $city_id, $shop_detail, $image, $filename, $user_id);
-// }
-
-// function regist_shop_transaction($db, $shop_name, $genre_id, $city_id, $shop_detail, $image, $filename, $user_id){
-//   $db->beginTransaction();
-//   if(insert_shop($db, $shop_name, $genre_id, $city_id, $shop_detail, $filename, $user_id) 
-//     && save_image($image, $filename)){
-//     $db->commit();
-//     return true;
-//   }
-//   $db->rollback();
-//   return false;
-// }
-
-
-// // 購入履歴詳細テーブルから読み込む
-// //subtotal = 商品ごとの小計
-// function get_historys($db, $user_id){
-//   if($user_id !== 4){
-//     $where = ' WHERE history.user_id = ? ';
-//   } else  {
-//     $where = '';
-//   }
-//   $sql = "
-//   SELECT 
-//     history.history_id,
-//     history.create_datetime,
-//   SUM( history_details.at_price*history_details.amount) AS total
-
-//   FROM
-//     history
-//   JOIN
-//     history_details
-//   ON
-// 	history.history_id = history_details.history_id
-//   {$where}
-//   GROUP BY
-//  	  history_id
-//   ";
-//   if($user_id !== 4){ //管理者ユーザーでなければ自身の履歴しかみれない
-//     return fetch_all_query($db, $sql, array($user_id));
-//   } else {
-//     return fetch_all_query($db, $sql, array());
-//   }
-// }
-
-// function get_history_details($db, $history_id){
-//   $sql = "
-//     SELECT
-//       history.history_id,
-//       history.user_id,
-//       history_details.at_price,
-//       history_details.amount,
-//       history_details.history_details_id,
-//       items.item_id,
-//       items.name,
-//       (history_details.at_price * history_details.amount) AS subtotal
-//       FROM
-//       ((history_details 
-//     JOIN 
-//       history 
-//     ON 
-//       history.history_id = history_details.history_id)
-//     JOIN 
-//       items 
-//     ON 
-//       history_details.item_id = items.item_id)
-//     WHERE 
-//       history.history_id = ?
-//   ";
-//   return fetch_all_query($db, $sql, array($history_id));
-// }
 
