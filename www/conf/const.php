@@ -43,6 +43,11 @@ define('SHOP_NAME_LENGTH_MAX', 50);
 define('SHOP_DETAIL_LENGTH_MIN', 1);
 define('SHOP_DETAIL_LENGTH_MAX', 200);
 
+define('COMMENT_TITLE_LENGTH_MIN', 1);
+define('COMMENT_TITLE_LENGTH_MAX', 50);
+define('COMMENT_BODY_LENGTH_MIN', 1);
+define('COMMENT_BODY_LENGTH_MAX', 200);
+
 // define('PERMITTED_ITEM_STATUSES', array(
 //   'open' => 1,
 //   'open' => 1,
