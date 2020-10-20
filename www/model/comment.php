@@ -49,7 +49,6 @@ function validate_comment($user_id, $shop_id, $comment_title, $comment_body){
   
   return $is_valid_user_id
   && $is_valid_shop_id
-  && $is_valid_city_id
   && $is_valid_comment_title
   && $is_valid_comment_body;
 }
@@ -78,7 +77,7 @@ function is_valid_shop_id($shop_id){
 function is_valid_comment_title($comment_title){
   $is_valid = true;
   if(is_valid_length($comment_title, COMMENT_TITLE_LENGTH_MIN, COMMENT_TITLE_LENGTH_MAX) === false){
-    set_error('店名は'. COMMENT_TITLE_LENGTH_MIN . '文字以上、' . COMMENT_TITLE_LENGTH_MAX . '文字以内にしてください。');
+    set_error('題名は'. COMMENT_TITLE_LENGTH_MIN . '文字以上、' . COMMENT_TITLE_LENGTH_MAX . '文字以内にしてください。');
     $is_valid = false;
   }
   return $is_valid;
@@ -87,8 +86,8 @@ function is_valid_comment_title($comment_title){
 // 本文のバリデーション
 function is_valid_comment_body($comment_body){
   $is_valid = true;
-  if(is_valid_length($comment_title, COMMENT_BODY_LENGTH_MIN, COMMENT_BODY_LENGTH_MAX) === false){
-    set_error('店名は'. COMMENT_BODY_LENGTH_MIN . '文字以上、' . COMMENT_BODY_LENGTH_MAX . '文字以内にしてください。');
+  if(is_valid_length($comment_body, COMMENT_BODY_LENGTH_MIN, COMMENT_BODY_LENGTH_MAX) === false){
+    set_error('本文は'. COMMENT_BODY_LENGTH_MIN . '文字以上、' . COMMENT_BODY_LENGTH_MAX . '文字以内にしてください。');
     $is_valid = false;
   }
   return $is_valid;
@@ -108,10 +107,22 @@ function regist_comment_image($db, $comment_id, $file_data){
 }
 
 function regist_comment_image_transaction($db, $comment_id, $file_data, $filename){
-  if(insert_comment_image($db, $comment_id, $filename) && save_comment_image($file_data, $filename)===false){
-    return false;
-  } else{
+  if(insert_comment_image($db, $comment_id, $filename) && save_comment_image($file_data, $filename)){
     return true;
-  }
+  } 
+  return false;
 }
 
+function validate_comment_image($filename){
+  $is_valid_filename = is_valid_filename($filename);
+  return $is_valid_filename;
+}
+
+// 投稿画像のバリデーション
+function is_valid_filename($filename){
+  $is_valid = true;
+  if($filename === ''){
+    $is_valid = false;
+  }
+  return $is_valid;
+}

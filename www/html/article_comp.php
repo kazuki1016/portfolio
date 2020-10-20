@@ -39,52 +39,22 @@ $arr=array(); //配列として定義
  }
 
 // $db->beginTransaction();
-// try{
-  if(insert_comment($db, $user_id, $shop_id, $comment_title, $comment_body)===false){
+  if(regist_comment($db, $user_id, $shop_id, $comment_title, $comment_body)){
+    $comment_id = $db->lastInsertId();  
+  } else {
     set_error('口コミ登録に失敗しました');
     // redirect_to(ARTICLE_URL);
   }
-  $comment_id = $db->lastInsertId();  
+
   for($j=0; $j<count($file_data); $j++){
-    if(regist_comment_image($db, $comment_id, $file_data[$j])===false) {
-    set_error('画像の投稿に失敗しました');
+    if(regist_comment_image($db, $comment_id, $file_data[$j])) {
+      set_message('口コミ登録に成功しました');
+      // $db->commit();
+    } else {
+      set_error('画像の投稿に失敗しました');
+      // $db->rollback();
     }
   }
-// } catch (PDOException $e) {
-//   throw $e->getMessage();
-// }
-set_message('口コミ登録に成功しました');
 include_once VIEW_PATH . '/add_comp_view.php';
 
 // redirect_to(MYPAGE_URL);
-
-
-// //商品の購入〜履歴追加までトランザクション
-// $db->beginTransaction();
-// try{
-//   if(purchase_carts($db, $carts) === false){
-//     set_error('商品が購入できませんでした。');
-//     redirect_to(CART_URL);
-//   }
-//   if(insert_history($db, $user['user_id'])===false){
-//     set_error('商品履歴の追加に失敗');
-//   }
-//   $history_id = $db->lastInsertId();  
-//   foreach($carts as $history){
-//     $at_price = $history['price'];
-//     $item_id = $history['item_id'];
-//     $amount = $history['amount'];
-//     if(insert_history_details($db, $history_id, $at_price, $item_id, $amount) === false){
-//       set_error('商品詳細履歴の追加に失敗');
-//     }
-//   } 
-//   $db->commit();
-// } catch (PDOException $e) {
-//   $db->rollback();
-//   throw $e;
-// }
-
-// $total_price = sum_carts($carts);
-
-
-// include_once '../view/finish_view.php';
