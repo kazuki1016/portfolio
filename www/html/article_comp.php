@@ -11,8 +11,10 @@ if(is_logined() === false){
 }
 $db = get_db_connect();
 $user = get_login_user($db);
-$shop_id = get_post('shop_id');
-$user_id = get_post('user_id');
+$shop_id = get_session('shop_id');
+$user_id = get_session('user_id');
+// var_dump($shop_id);
+// var_dump($user_id);
 
 $comment_title = get_post('comment_title');
 $comment_body = get_post('comment_body');
@@ -20,7 +22,6 @@ $comment_images = get_file('comment_images');
 $image_num = count($comment_images['name']); //postされた$comment_imagesの中身の個数をカウント。画像の名前をカウントすることに。$comment_imagesではだめ（var_dumpするとわかる）
 $file_data=array();  //配列として定義
 $arr=array(); //配列として定義
-
 //画像1枚のをアップロードするときと同じ配列になるようにpostされた数だけ再定義する
  for($i=0; $i<$image_num; $i++){  
    $name = $comment_images['name'][$i];
@@ -38,23 +39,26 @@ $arr=array(); //配列として定義
    $file_data[]=$arr;
  }
 
-// $db->beginTransaction();
-  if(regist_comment($db, $user_id, $shop_id, $comment_title, $comment_body)){
-    $comment_id = $db->lastInsertId();  
-  } else {
-    set_error('口コミ登録に失敗しました');
+$db->beginTransaction();
+try{
+  if(regist_comment($db, $user_id, $shop_id, $comment_title, $comment_body)===false){
     // redirect_to(ARTICLE_URL);
+  } 
+  $comment_id = $db->lastInsertId();  //$comment_idの値を取得
+  for($j=0; $j<count($file_data); $j++){  //投稿された画像分だけデータベースへ保存
+    if(regist_comment_image($db, $comment_id, $file_data[$j])===false) {
+      // redirect_to(ARTICLE_URL);
+    } 
   }
+  $db->commit();
+  set_message('口コミ登録に成功しました');
+  
+} catch(PDOExeption $e) {  
+  $db->rollback();
+  print $e->getMessage();
+  set_error('口コミ登録に失敗しました');
+}
 
-  for($j=0; $j<count($file_data); $j++){
-    if(regist_comment_image($db, $comment_id, $file_data[$j])) {
-      set_message('口コミ登録に成功しました');
-      // $db->commit();
-    } else {
-      set_error('画像の投稿に失敗しました');
-      // $db->rollback();
-    }
-  }
-include_once VIEW_PATH . '/add_comp_view.php';
+// include_once VIEW_PATH . '/add_comp_view.php';
 
-// redirect_to(MYPAGE_URL);
+redirect_to(IMPRESSION_URL);

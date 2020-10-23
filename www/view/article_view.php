@@ -54,15 +54,13 @@
           <div class="blank">
           </div>
           <div class="form">
-            <label class="control-label">本文（200字以内）</label>
+            <label class="control-label">本文（600字以内）</label>
             <textarea name="comment_body" class="form-control" cols="30" rows="5"></textarea>
           </div>
           <div class = "submit">
             <input type="submit" value="口コミ投稿" class="btn btn-primary">
           </div>
           <input type="hidden" name ="token"  value="<?php print h($token);?>" >
-          <input type="hidden" name ="user_id"  value="<?php print h($_SESSION['user_id']);?>" >
-          <input type="hidden" name ="shop_id"  value="<?php print h($shop[0]['shop_id']);?>" >
         </form>
       </div>
     </div>

@@ -30,6 +30,40 @@ function insert_comment_image($db, $comment_id, $filename){
   return execute_query($db, $sql, array($comment_id, $filename));
 }
 
+//お店毎のコメントを取得
+function get_comment($db, $shop_id){
+  $sql = "
+    SELECT 
+      comments.comment_id, 
+      comments.user_id, 
+      comments.shop_id, 
+      comments.comment_title, 
+      comments.comment_body, 
+      DATE_FORMAT(comments.create_datetime,'%Y/%m/%d') AS comment_date,
+      shops.shop_name
+    FROM 
+      comments
+    INNER JOIN 
+      shops ON comments.shop_id = shops.shop_id
+    WHERE 
+      comments.shop_id = ?;
+  ";
+  return fetch_all_query($db, $sql, array($shop_id));
+}
+
+function get_comment_image($db, $comment_id){
+  $sql = "
+    SELECT 
+      comment_images.comment_image
+    FROM 
+      comment_images
+    WHERE 
+      comment_images.comment_id = ?;
+  ";
+  return fetch_all_query($db, $sql, array($comment_id));
+}
+
+
 /** コメント投稿をデータベースへ追加する処理＝regist_comment
  * 1：バリデーションの処理=validate_comment
  * 2：実際に登録する処理＝insert_comment

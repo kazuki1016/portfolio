@@ -6,7 +6,8 @@ define('VIEW_PATH', $_SERVER['DOCUMENT_ROOT'] . '/../view/');
 
 
 define('IMAGE_PATH', '/assets/images/');
-define('STYLESHEET_PATH', '/assets/css/');
+define('COMMENT_IMAGE_PATH', '/assets/comment_images/');
+define('STYLESHEET_PATH', $_SERVER['DOCUMENT_ROOT'] . '/assets/css/');
 define('IMAGE_DIR', $_SERVER['DOCUMENT_ROOT'] . '/assets/images/' );
 define('COMMENT_IMAGE_DIR', $_SERVER['DOCUMENT_ROOT'] . '/assets/comment_images/' );
 
@@ -24,6 +25,7 @@ define('FINISH_URL', '/finish.php');
 define('ADMIN_URL', '/admin.php');
 define('MYPAGE_URL', '/mypage.php');
 define('ADD_URL', '/add.php');
+define('IMPRESSION_URL', '/impression.php');
 define('ARTICLE_URL', '/article.php');
 
 define('REGEXP_ALPHANUMERIC', '/\A[0-9a-zA-Z]+\z/');
@@ -46,7 +48,7 @@ define('SHOP_DETAIL_LENGTH_MAX', 200);
 define('COMMENT_TITLE_LENGTH_MIN', 1);
 define('COMMENT_TITLE_LENGTH_MAX', 50);
 define('COMMENT_BODY_LENGTH_MIN', 1);
-define('COMMENT_BODY_LENGTH_MAX', 200);
+define('COMMENT_BODY_LENGTH_MAX', 600);
 
 // define('PERMITTED_ITEM_STATUSES', array(
 //   'open' => 1,
