@@ -11,6 +11,7 @@ session_start();
 //   redirect_to(HOME_URL);
 // }
 $db = get_db_connect();
+var_dump($_SESSION);
 
 // // トークンの生成
 $token = get_csrf_token();

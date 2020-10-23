@@ -2,10 +2,8 @@
 <html lang="ja">
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
-  <link rel=”stylesheet” type=”text/css” href="mypage.css" />
-
-
   <title>お店情報</title>
+  <link rel=”stylesheet” href="css/shop.css" />
 </head>
 <style>
   .container{
@@ -16,7 +14,7 @@
     margin:0 auto;
     width: 90%;
   }
-  h3{
+  h4{
     padding-top: 20px;
   }
 
@@ -47,8 +45,8 @@
   }
   /* .status{
     padding: 0px 10px;
-  } */
-</style>
+  } */ 
+ </style>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <div class="container " >
@@ -56,8 +54,6 @@
       <table class="table">
         <tbody>
           <?php foreach($shop as $data){?>
-            <?php var_dump($data)?>
-            <?php var_dump($data['shop_id'])?>
           <tr>
             <td colspan="3" class="shop_list"><h4><?php print h($data['shop_name'])?></h4></td>
           </tr>

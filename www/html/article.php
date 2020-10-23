@@ -15,7 +15,9 @@ if(is_logined() === false){
 $db = get_db_connect();
 $user = get_login_user($db);
 $token = get_csrf_token();
-$shop_id = get_data('shop_id');
+$shop_id = get_session('shop_id');
+
+// $shop_id = get_data('shop_id');
 var_dump($shop_id);
 var_dump($_SESSION['user_id']);
 $shop = get_shop_data($db, $shop_id);
