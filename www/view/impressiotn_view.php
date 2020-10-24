@@ -54,7 +54,7 @@
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <h4><?php print h(get_session('shop_name'))?>の口コミ一覧</h4>
     <div class="btn_impression">
-      <a href="article.php?shop_id=<?php print h($comments[0]['shop_id'])?>">口コミを投稿する</a>
+      <a class="btn btn-primary" href="article.php?shop_id=<?php print h($comments[0]['shop_id'])?>">口コミを投稿する</a>
     </div>
     <p>全<?php print h(count($comments)) ?>件</p>
     <?php if(count($comments)===0)  {?>

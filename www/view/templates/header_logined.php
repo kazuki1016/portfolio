@@ -18,13 +18,17 @@
     <div class="collapse navbar-collapse" id="headerNav">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
+        <?php if(is_logined() === true) {?>
           <a class="nav-link" href="<?php print(LOGOUT_URL);?>">ログアウト</a>
+        <?php }else { ?>
+          <a class="nav-link" href="<?php print(SIGNUP_URL);?>">サインアップ</a>
+        <?php } ?>
         </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <form class="navbar-form" method="GET" action="#">
-          <input type="text" class="form-control" placeholder="キーワード">
+          <form method="GET" action="shop_name_list.php" class="navbar-form" >
+            <input type="text" name="shop_name" class="form-control" placeholder="キーワード">
         </li>
         <li class="nav-item">
           <input type="submit" class="btn btn-info" value="検索">

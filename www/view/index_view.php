@@ -55,22 +55,23 @@
                    margin-top: 10px">  
           ★お店を探す
         </h5>
-        <form class="form-inline"　action="#" method="GET" style="margin-bottom:10px;">
-          <p>ジャンルから探す</p>
-          <select class="form-control" name="genre">
+        <p>ジャンルから探す</p>
+        <form method="GET" action="shop_genre_list.php" class="form-inline" target="_blank" style="margin-bottom:10px;">
+          <select name="genre_id" class="form-control">
             <option disabled selected>選択してください</option>
-            <?php foreach($_SESSION['genres'] as $genre) { ?>
-              <option value="<?php print h($genre['genre_id']); ?>"><?php print h($genre['genre_name']); ?></option>
-              <?php } ?>
+            <?php foreach($genres as $genre) { ?>
+              <option value="<?php print h($genre['genre_id']); ?>"><?php print h($genre['genre_name']."({$genre['shop_number_per_genre']})"); ?></option>
+            <?php } ?>
           </select>
           <input type="submit" class="btn btn-primary" value="検索" style="margin-left: 10px;">
         </form>
-        <form class="form-inline"　action="#" method="GET" style="margin-bottom:10px;">
+
+        <form method="GET" action="shop_city_list.php" class="form-inline" style="margin-bottom:10px;">
           <p>市町村から探す</p>
-          <select class="form-control" name="genre">
+          <select name="city_id" class="form-control" >
             <option disabled selected>選択してください</option>
             <?php foreach($_SESSION['citys'] as $city) { ?>
-              <option value="<?php print h($city['city_id']); ?>"><?php print h($city['city_name']); ?></option>
+              <option value="<?php print h($city['city_id']); ?>"><?php print h($city['city_name']."({$city['shop_number_per_city']})"); ?></option>
               <?php } ?>
           </select>
           <input type="submit" class="btn btn-primary" value="検索" style="margin-left: 10px;">

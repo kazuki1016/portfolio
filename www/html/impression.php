@@ -9,9 +9,9 @@ require_once MODEL_PATH . 'comment.php';
 
 session_start();
 
-if(is_logined() === false){
-  redirect_to(HOME_URL);
-}
+// if(is_logined() === false){
+//   redirect_to(HOME_URL);
+// }
 //  var_dump($_SESSION);
 
 $db = get_db_connect();
@@ -21,37 +21,15 @@ $shop_id = get_session('shop_id');
 $comments = get_comment($db, $shop_id);
 // print('<pre>');
 //   var_dump($comments);
-
 //  print('<pre>');
 
+//コメントの数だけ配列の再定義を実施
 for($i=0; $i < count($comments); $i++){
-  $comment_id[] = $comments[$i]['comment_id'];
-  $comment_images[] = get_comment_image($db, $comment_id[$i]);
+  $comment_id[] = $comments[$i]['comment_id'];  //コメントIDを配列としていれる
+  $comment_images[] = get_comment_image($db, $comment_id[$i]);  //コメントの数だけ画像を配列にいれる
   foreach($comment_images as $file_data){
-    $comments[$i]['comment_images'] = $file_data;
+    $comments[$i]['comment_images'] = $file_data; //$commentsに画像を配列として挿入。
   }
 }
 
-// foreach($comments as $comment){
-//   var_dump($comment);
-// }
-// print('<pre>');
-//   var_dump($comments);
-
-// print('<pre>');
-// print('<pre>');
-//   var_dump($comments['comment_images']);
-
-// print('<pre>');
-
-
-
-//  foreach($comment_images as $comment_image) {
-//   foreach($comment_image as $image_data){
-//     var_dump($image_data);
-//   }
-// }
-// $shop_id = get_data('shop_id');
-// $shop = get_shop_data($db, $shop_id);
-// var_dump($shop);
 include_once VIEW_PATH . 'impressiotn_view.php';

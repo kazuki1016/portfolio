@@ -9,6 +9,7 @@ session_start();
 if(is_logined() === false){
   redirect_to(LOGIN_URL);
 }
+
 $db = get_db_connect();
 $user = get_login_user($db);
 $shop_id = get_session('shop_id');
@@ -39,26 +40,18 @@ $arr=array(); //配列として定義
    $file_data[]=$arr;
  }
 
-$db->beginTransaction();
-try{
-  if(regist_comment($db, $user_id, $shop_id, $comment_title, $comment_body)===false){
-    // redirect_to(ARTICLE_URL);
-  } 
-  $comment_id = $db->lastInsertId();  //$comment_idの値を取得
-  for($j=0; $j<count($file_data); $j++){  //投稿された画像分だけデータベースへ保存
-    if(regist_comment_image($db, $comment_id, $file_data[$j])===false) {
-      // redirect_to(ARTICLE_URL);
-    } 
+$db->beginTransaction();  //トランザクション開始。コメント登録と画像登録どちらか一方にエラーがあればロールバックする
+  if(regist_comment($db, $user_id, $shop_id, $comment_title, $comment_body)===true){
+    $comment_id = $db->lastInsertId();  //$comment_idの値を取得
+    for($j=0; $j<count($file_data); $j++){  //投稿された画像分だけデータベースへ保存
+      regist_comment_image($db, $comment_id, $file_data[$j]);
+    }
   }
-  $db->commit();
-  set_message('口コミ登録に成功しました');
-  
-} catch(PDOExeption $e) {  
-  $db->rollback();
-  print $e->getMessage();
-  set_error('口コミ登録に失敗しました');
-}
-
-// include_once VIEW_PATH . '/add_comp_view.php';
-
-redirect_to(IMPRESSION_URL);
+  if(isset($_SESSION['__errors'])===true && count($_SESSION['__errors'])>0){  //もしエラーがでたらロールバックしてリダイレクト
+    $db->rollback();
+    redirect_to(ARTICLE_URL);
+  } else {
+    $db->commit();  //エラーがなければコミットしてデータベースへ登録する
+    set_message('口コミ登録に成功しました');
+  }
+redirect_to(IMPRESSION_URL); //成功したら口コミ一覧へリダイレクト

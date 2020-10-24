@@ -5,7 +5,7 @@
   <link rel=”stylesheet” type=”text/css” href="mypage.css" />
 
 
-  <title>マイページ</title>
+  <title>検索結果</title>
 </head>
 <style>
   .container{
@@ -97,18 +97,11 @@
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <div class="container " >
-    <h3><?php print h($user['user_name']); ?>さんのマイページ</h2>
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <div class="row main">
-      <div class="col-7 nav__item">
-          <li class="nav__item"><a href="mypage.php">マイページトップへ</a></li>
-          <li class="nav__item"><a href="kike.php">お気に入り一覧へ</a></li>
-          <li class="nav__item"><a href="add.php">お店登録へ</a></li>
-
-      </div>
-    </div>
+  </div>
   <div class="main_border">
-      <h5>投稿したお店</h5>
+      <h5>「<?php print h($shop_name)?>」の検索結果</h5>
       </div>
         <table class="table">
           <thead>
@@ -119,11 +112,11 @@
             </tr>
           </thead>
           <tbody>
-           <?php foreach($my_shoplists as $my_shoplist){?>
+           <?php foreach($shops as $shop){?>
             <tr>
-              <td class="shop_list"><a href="shop.php?shop_id=<?php print h($my_shoplist['shop_id'])?>"><?php print h($my_shoplist['shop_name'])?></a></td>
-              <td class="genre_city"><a href="shop.php?genre_name=<?php print h($my_shoplist['genre_name'])?>"><?php print h($my_shoplist['genre_name'])?></a>/
-                                     <a href="shop.php?city_name=<?php print h($my_shoplist['city_name'])?>"><?php print h($my_shoplist['city_name'])?></a>
+              <td class="shop_list"><a href="shop.php?shop_id=<?php print h($shop['shop_id'])?>"><?php print h($shop['shop_name'])?></a></td>
+              <td class="genre_city"><a href="shop.php?genre_name=<?php print h($shop['genre_name'])?>"><?php print h($shop['genre_name'])?></a>/
+                                     <a href="shop.php?city_name=<?php print h($shop['city_name'])?>"><?php print h($shop['city_name'])?></a>
               </td>
               <td>
                 <div class="mypage_form">
@@ -134,8 +127,8 @@
               </td>
             </tr>
             <tr>
-              <td><img src="<?php print h(IMAGE_PATH . $my_shoplist['filename'])?>"></td>
-              <td colspan="2"><?php print h($my_shoplist['shop_detail'])?></td>
+              <td><img src="<?php print h(IMAGE_PATH . $shop['filename'])?>"></td>
+              <td colspan="2"><?php print h($shop['shop_detail'])?></td>
             </tr>            
             <?php } ?>
           </tbody>

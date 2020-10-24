@@ -31,6 +31,7 @@ function get_my_shoplist($db, $user_id){
   return fetch_all_query($db, $sql, array($user_id));
 }
 
+// お店情報を取得する。
 function get_shop_data($db, $shop_id){
   $sql = "
     SELECT
@@ -52,6 +53,108 @@ function get_shop_data($db, $shop_id){
       shop_id = ?
   ";
   return fetch_all_query($db, $sql, array($shop_id));
+}
+
+// ユーザーが登録したお店一覧を取得する。
+function get_shop_data_by_name($db, $serch_shop_name){
+  $sql = "
+    SELECT
+      shops.shop_id, 
+      shops.shop_name,
+      shops.filename,
+      shops.shop_detail,
+      citys.city_id,
+      citys.city_name,
+      genres.genre_id,
+      genres.genre_name
+    FROM
+      (( shops 
+    INNER JOIN 
+        citys ON shops.city_id = citys.city_id)
+    INNER JOIN 
+      genres ON shops.genre_id = genres.genre_id)
+    WHERE
+      shops.shop_name LIKE ?;
+  ";
+  return fetch_all_query($db, $sql, array($serch_shop_name));
+}
+
+// ユーザーが指定したジャンルidに当てはまるお店一覧を取得する。
+function get_shop_data_by_genre($db, $genre_id){
+  $sql = "
+    SELECT
+      shops.shop_id, 
+      shops.shop_name,
+      shops.filename,
+      shops.shop_detail,
+      citys.city_id,
+      citys.city_name,
+      genres.genre_id,
+      genres.genre_name
+    FROM
+      (( shops 
+    INNER JOIN 
+        citys ON shops.city_id = citys.city_id)
+    INNER JOIN 
+      genres ON shops.genre_id = genres.genre_id)
+    WHERE
+      genres.genre_id = ?
+  ";
+  return fetch_all_query($db, $sql, array($genre_id));
+}
+
+// ユーザーが指定した市町村idに当てはまるお店一覧を取得する。
+function get_shop_data_by_city($db, $city_id){
+  $sql = "
+    SELECT
+      shops.shop_id, 
+      shops.shop_name,
+      shops.filename,
+      shops.shop_detail,
+      citys.city_id,
+      citys.city_name,
+      genres.genre_id,
+      genres.genre_name
+    FROM
+      (( shops 
+    INNER JOIN 
+        citys ON shops.city_id = citys.city_id)
+    INNER JOIN 
+      genres ON shops.genre_id = genres.genre_id)
+    WHERE
+      citys.city_id = ?
+  ";
+  return fetch_all_query($db, $sql, array($city_id));
+}
+
+// 各ジャンルに属するお店の数の集計
+function get_shop_number_per_genre($db, $genre_id){
+  $sql = "
+    SELECT
+      COUNT(shops.shop_id) AS shop_number_per_genre
+    FROM
+      shops 
+    INNER JOIN 
+      genres ON genres.genre_id = shops.genre_id
+    WHERE
+      genres.genre_id = ?
+  ";
+  return fetch_query($db, $sql, array($genre_id));
+}
+
+// 各ジャンルに属するお店の数の集計
+function get_shop_number_per_city($db, $city_id){
+  $sql = "
+    SELECT
+      COUNT(shops.city_id) AS shop_number_per_city
+    FROM
+      shops 
+    INNER JOIN 
+    citys ON citys.city_id = shops.city_id
+    WHERE
+    citys.city_id = ?
+  ";
+  return fetch_query($db, $sql, array($city_id));
 }
 
 // //並び替えのSQL
