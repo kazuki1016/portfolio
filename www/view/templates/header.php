@@ -24,7 +24,7 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <form class="navbar-form" method="GET" action="#">
+          <form class="navbar-form" method="GET" action="shop_name_list.php">
           <input type="text" class="form-control" placeholder="キーワード">
         </li>
         <li class="nav-item">
