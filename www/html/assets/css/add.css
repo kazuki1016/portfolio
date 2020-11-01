@@ -1,0 +1,21 @@
+label {
+  margin-bottom:none;
+}
+h3{
+  padding: 10px 0;
+  text-align: center;
+}
+.blank{
+  padding-bottom: 20px;
+}
+.submit{
+  text-align: center;
+  margin-top: 20px;
+}
+.btn-primary{
+  padding: 0.375rem 5.375rem;
+}
+.control-label{
+  padding-left: 0.5em;
+  border-left: solid 0.7em palevioletred;    
+}

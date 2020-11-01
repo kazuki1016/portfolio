@@ -33,8 +33,8 @@
     padding: 0.375rem 2.375rem;
   }
   .btn_impression{
-    text-align: center;
     padding-bottom: 30px;
+    text-align:center;
   }
   .table th{
     font-size: 15px;
@@ -54,7 +54,11 @@
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <h4><?php print h(get_session('shop_name'))?>の口コミ一覧</h4>
     <div class="btn_impression">
-      <a class="btn btn-primary" href="article.php?shop_id=<?php print h($comments[0]['shop_id'])?>">口コミを投稿する</a>
+      <?php if(is_logined()){ ?>
+        <a class="btn btn-primary" href="article.php?shop_id=<?php print h($comments[0]['shop_id'])?>">口コミを投稿する</a>
+      <?php } else { ?>
+        <a class="btn btn-primary" href="article.php?shop_id=<?php print h($comments[0]['shop_id'])?>">口コミを投稿する(投稿するにはログインしてください)</a>
+      <?php } ?>
     </div>
     <p>全<?php print h(count($comments)) ?>件</p>
     <?php if(count($comments)===0)  {?>
@@ -74,7 +78,8 @@
               <td class="title"><u><?php print h($comment['comment_title']) ?></u></td>
             </tr>
             <tr>
-              <td><?php print h($comment['comment_body']) ?></td>
+              <td><?php print (nl2br(h($comment['comment_body']))) ?></td>  
+              <!-- 改行を維持しつつエスケープ処理を行う（順番に注意） -->
             </tr>
             <tr>
               <td>
@@ -85,10 +90,10 @@
                 <?php } ?>
               </td>
             </tr>
-        </tbody>
-      </table>
-    </div>
-  <?php } ?>
+          </tbody>
+        </table>
+      </div>
+    <?php } ?>
   </div>
   <?php include VIEW_PATH . 'templates/footer.php'; ?>
 </body>

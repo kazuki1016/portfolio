@@ -12,15 +12,10 @@ if(is_logined() === false){
 }
 
 $db = get_db_connect();
-// var_dump($_SESSION);
 
 $token = get_csrf_token();
 $user = get_login_user($db);
 $user_id = $user['user_id'];
-$my_shoplists = get_my_shoplist($db, $user_id);
-for($i=0; $i<count($my_shoplists); $i++){
-  $my_shoplists_ids[] = $my_shoplists[$i]['shop_id'];
-}
-set_session('my_shoplists_ids', $my_shoplists_ids);
-
-include_once VIEW_PATH . 'mypage_view.php';
+$shop_id = get_data('shop_id');
+$edit_shop = get_shop_data($db, $shop_id);
+include_once VIEW_PATH . 'edit_view.php';

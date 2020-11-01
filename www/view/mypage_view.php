@@ -16,13 +16,10 @@
     margin:0 auto;
     width: 90%;
   }
-  /* .nav {
-    display: table;
-    background-color:rgb(240, 238, 238);
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 40px;
-  } */
+  .container p {
+    text-align:center;
+    padding-top:20px;
+  }
   h3{
     padding-top: 20px;
   }
@@ -102,48 +99,59 @@
     <div class="row main">
       <div class="col-7 nav__item">
           <li class="nav__item"><a href="mypage.php">マイページトップへ</a></li>
-          <li class="nav__item"><a href="kike.php">お気に入り一覧へ</a></li>
+          <li class="nav__item"><a href="bookmark.php">お気に入り一覧へ</a></li>
           <li class="nav__item"><a href="add.php">お店登録へ</a></li>
-
       </div>
     </div>
-  <div class="main_border">
+    <div class="main_border">
       <h5>投稿したお店</h5>
-      </div>
-        <table class="table">
-          <thead>
+    </div>
+    <?php if(count($my_shoplists)===0) { ?>
+      <p>登録したお店はまだありません</p>
+    <?php } else { ?>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>店名</th>
+            <th>ジャンル/市町村</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($my_shoplists as $my_shoplist){?>
             <tr>
-              <th>店名</th>
-              <th>ジャンル/市町村</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-           <?php foreach($my_shoplists as $my_shoplist){?>
-            <tr>
-              <td class="shop_list"><a href="shop.php?shop_id=<?php print h($my_shoplist['shop_id'])?>"><?php print h($my_shoplist['shop_name'])?></a></td>
-              <td class="genre_city"><a href="shop.php?genre_name=<?php print h($my_shoplist['genre_name'])?>"><?php print h($my_shoplist['genre_name'])?></a>/
-                                     <a href="shop.php?city_name=<?php print h($my_shoplist['city_name'])?>"><?php print h($my_shoplist['city_name'])?></a>
+              <td class="shop_list">
+                <a href="shop.php?shop_id=<?php print h($my_shoplist['shop_id'])?>"><?php print h($my_shoplist['shop_name'])?></a>
+              </td>
+              <td class="genre_city">
+                <a href="shop_genre_list.php?genre_id=<?php print h($my_shoplist['genre_id'])?>"><?php print h($my_shoplist['genre_name'])?></a>/
+                <a href="shop_city_list.php?city_id=<?php print h($my_shoplist['city_id'])?>"><?php print h($my_shoplist['city_name'])?></a>
               </td>
               <td>
                 <div class="mypage_form">
-                  <form method="POST" action="edit.php"><input type="submit" value="編集する" class="btn btn-primary btn_mypage"><input type="hidden" value=""></form>
-                  <form method="POST" action="bookmark.php"><input type="submit" value="❤お気に入りへ" class="btn btn-success btn_mypage"><input type="hidden" value=""></form>
-                  <form method="POST" action="mypage_delete.php"><input type="submit" value="お店の削除" class="btn btn-secondary btn_mypage"><input type="hidden" value=""></form>
+                  <a class="btn btn-primary btn_mypage" href="edit_shop.php?shop_id=<?php print h($my_shoplist['shop_id']);?>" role="button" >編集する</a>         
+                  <?php if(in_array($my_shoplist['shop_id'], $_SESSION['bookmarked_shop_ids'])===false){?>   <!--既にお気に入り済みならお気に入りボタンを表示させない  -->
+                    <form method="POST" action="bookmark.php">
+                      <input type="submit" value="❤お気に入りへ" class="btn btn-success btn_mypage">
+                      <input type="hidden" name="shop_id" value="<?php print h($my_shoplist['shop_id'])?>">
+                    </form>
+                  <?php } ?>
+                  <form method="POST" action="delete_shop.php">
+                    <input type="submit" value="お店の削除" class="btn btn-secondary btn_mypage">
+                    <input type="hidden" name="shop_id" value="<?php print h($my_shoplist['shop_id'])?>">
+                  </form>
                 </div>
               </td>
             </tr>
             <tr>
               <td><img src="<?php print h(IMAGE_PATH . $my_shoplist['filename'])?>"></td>
-              <td colspan="2"><?php print h($my_shoplist['shop_detail'])?></td>
+              <td colspan="2"><?php print (nl2br(h($my_shoplist['shop_detail']))) ?></td>
             </tr>            
-            <?php } ?>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  
+          <?php } ?>
+        </tbody>
+      </table>
+    <?php } ?>
+  </div>  
 </body>
 <?php include VIEW_PATH . 'templates/footer.php'; ?>
 </html>

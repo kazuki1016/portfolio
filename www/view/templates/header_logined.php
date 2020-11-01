@@ -17,13 +17,18 @@
     </button>
     <div class="collapse navbar-collapse" id="headerNav">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
         <?php if(is_logined() === true) {?>
-          <a class="nav-link" href="<?php print(LOGOUT_URL);?>">ログアウト</a>
-        <?php }else { ?>
-          <a class="nav-link" href="<?php print(SIGNUP_URL);?>">サインアップ</a>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php print(LOGOUT_URL);?>">ログアウト</a>
+          </li>
+          <?php }else { ?>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php print(SIGNUP_URL);?>">サインアップ</a>
+          </li>
+          <li>
+            <a class="nav-link" href="<?php print(LOGIN_URL);?>">ログイン</a>
+          </li>
         <?php } ?>
-        </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">

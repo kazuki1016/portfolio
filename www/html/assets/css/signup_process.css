@@ -1,0 +1,12 @@
+@import url('css_parts/form_parts.css');
+p{
+  text-align: center;
+}
+.btn-secondary{
+  padding: 0.375rem 5.375rem;
+  margin-left: 0.375rem;
+}
+.btn-primary{
+  margin-right: 0.375rem;
+}
+

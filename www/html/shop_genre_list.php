@@ -12,12 +12,11 @@ session_start();
 //   redirect_to(LOGIN_URL);
 // }
 
-// var_dump($_SESSION);
+var_dump($_SESSION);
 $db = get_db_connect();
 $user = get_login_user($db);
 $genre_id = get_data('genre_id');  //ユーザーがジャンルを指定してきたとき
 $shops = get_shop_data_by_genre($db, $genre_id);
- var_dump($_GET);
 //  var_dump($genre_id);
 // // var_dump($shop);
 // $shop_name = $shop[0]['shop_name'];

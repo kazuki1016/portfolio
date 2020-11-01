@@ -1,0 +1,31 @@
+.table_head{
+  border:none;
+  padding: 0.1em;
+  background-color: #666;
+  color: #FFF;
+} 
+.table td{
+  vertical-align:middle;
+  padding: .30em;
+} 
+.table tr{
+  /* vertical-align:middle; */
+  padding: 0.10em 0;
+} 
+.shop_list {
+  width: 60%;
+}
+.shop_list a{
+  font-size: 25px;
+  padding-left: 0.5em;
+  border-left: solid 0.7em palevioletred;
+}
+.delite{
+  margin-top:15px ;
+}
+.detail{
+  width: 90%;
+}
+.table img{
+  max-width: 90%;
+}

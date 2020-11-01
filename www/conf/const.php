@@ -7,7 +7,8 @@ define('VIEW_PATH', $_SERVER['DOCUMENT_ROOT'] . '/../view/');
 
 define('IMAGE_PATH', '/assets/images/');
 define('COMMENT_IMAGE_PATH', '/assets/comment_images/');
-define('STYLESHEET_PATH', $_SERVER['DOCUMENT_ROOT'] . '/assets/css/');
+define('STYLESHEET_PATH', '/assets/css/');
+define('JAVASCRIPT_PATH', '/assets/javascript/');
 define('IMAGE_DIR', $_SERVER['DOCUMENT_ROOT'] . '/assets/images/' );
 define('COMMENT_IMAGE_DIR', $_SERVER['DOCUMENT_ROOT'] . '/assets/comment_images/' );
 
@@ -27,6 +28,8 @@ define('MYPAGE_URL', '/mypage.php');
 define('ADD_URL', '/add.php');
 define('IMPRESSION_URL', '/impression.php');
 define('ARTICLE_URL', '/article.php');
+define('BOOKMARK_URL', '/bookmark.php');
+define('EDIT_URL', '/edit_shop.php');
 
 define('REGEXP_ALPHANUMERIC', '/\A[0-9a-zA-Z]+\z/');
 define('REGEXP_POSITIVE_INTEGER', '/\A([1-9][0-9]*|0)\z/');
@@ -43,7 +46,7 @@ define('USER_PASSWORD_LENGTH_MAX', 100);
 define('SHOP_NAME_LENGTH_MIN', 1);
 define('SHOP_NAME_LENGTH_MAX', 50);
 define('SHOP_DETAIL_LENGTH_MIN', 1);
-define('SHOP_DETAIL_LENGTH_MAX', 200);
+define('SHOP_DETAIL_LENGTH_MAX', 600);
 
 define('COMMENT_TITLE_LENGTH_MIN', 1);
 define('COMMENT_TITLE_LENGTH_MAX', 50);

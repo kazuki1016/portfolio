@@ -69,10 +69,12 @@
           </td>
           <td>
             <div class="mypage_form">
-              <form method="POST" action="bookmark.php">
-                <input type="submit" value="❤お気に入りへ" class="btn btn-success btn_mypage">
-                <input type="hidden" value="">
-              </form>
+              <?php if(in_array($data['shop_id'], $_SESSION['bookmarked_shop_ids'])===false){?>   <!--既にお気に入り済みならお気に入りボタンを表示させない  -->
+                <form method="POST" action="bookmark.php">
+                  <input type="submit" value="❤お気に入りへ" class="btn btn-success btn_mypage">
+                  <input type="hidden" name="shop_id" value="<?php print h($data['shop_id'])?>">
+                </form>
+              <?php } ?>
               <form method="GET" action="impression.php">
                 <input type="submit" value="口コミ" class="btn bg-info text-white btn_mypage">
                 <input type="hidden" name="shop_id" value="<?php print h($data['shop_id']);?>">

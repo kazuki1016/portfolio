@@ -3,8 +3,6 @@ require_once '../conf/const.php';
 require_once MODEL_PATH . 'functions.php';
 require_once MODEL_PATH . 'user.php';
 require_once MODEL_PATH . 'shop.php';
-// require_once MODEL_PATH . 'genre.php';
-// require_once MODEL_PATH . 'city.php';
 
 session_start();
 
@@ -12,16 +10,30 @@ session_start();
 //   redirect_to(HOME_URL);
 // // }
 // print('<pre>');
-var_dump($_SESSION);
+// var_dump($_SESSION);
 // print('<pre>');
 
 $db = get_db_connect();
 $token = get_csrf_token();
 $user = get_login_user($db);
-$genres = g($db);
-$citys = get_citys($db);
-$genre_number = get_shop_number_per_genre($db, $genre_id);
+$user_id = get_session('user_id');
 
+//ユーザーが登録したshop_idを取得してセッションに登録
+$my_shoplists = get_my_shoplist($db, $user_id);
+for($i=0; $i<count($my_shoplists); $i++){
+  $my_shoplists_ids[] = $my_shoplists[$i]['shop_id'];
+}
+set_session('my_shoplists_ids', $my_shoplists_ids);
+
+//ユーザーがブックマーク済みのshop_idを取得してセッションに登録
+$bookmark_lists = get_bookmark_list($db, $user_id); //データベースからユーザーのお気に入り一覧を取得
+for($i=0; $i<count($bookmark_lists); $i++){
+  $bookmarked_shop_ids[] = $bookmark_lists[$i]['shop_id'];
+}
+set_session('bookmarked_shop_ids', $bookmarked_shop_ids);
+
+// 各ジャンルのお店の数をカウントしたものを$genres格納してセッションに追加。
+$genres = g($db); //データベースからジャンル一覧を取得
 for($i=0; $i<count($genres); $i++){
   $genre_id = $genres[$i]['genre_id'];
   $shop_number_per_genres = get_shop_number_per_genre($db, $genre_id);
@@ -29,6 +41,10 @@ for($i=0; $i<count($genres); $i++){
     $genres[$i]['shop_number_per_genre'] = $shop_number_per_genre;
   }
 }
+set_session('genres', $genres);
+
+// 各市町村のお店の数をカウントしたものを$cityに格納してセッションに追加。
+$citys = get_citys($db);  //データベースから市町村一覧を取得
 for($i=0; $i<count($citys); $i++){
   $city_id = $citys[$i]['city_id'];
   $shop_number_per_citys = get_shop_number_per_city($db, $city_id);
@@ -36,18 +52,7 @@ for($i=0; $i<count($citys); $i++){
     $citys[$i]['shop_number_per_city'] = $shop_number_per_city;
   }
 }
-set_session('genres', $genres);
 set_session('citys', $citys);
-
-// print('<pre>');
-// var_dump($genres);
-// print('<pre>');
-
-// set_session('citys', get_citys($db));
-// $citys = get_session('citys');
-// $genres = get_session('genres');
-// set_session('genre_numbers', $genre_numbers);
-// $genre_numbers = get_session('genre_numbers');
-
+var_dump($_SESSION);
 
 include_once VIEW_PATH . 'index_view.php';
