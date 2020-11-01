@@ -1,0 +1,22 @@
+.container{
+  max-width: 1400px;
+}
+.main {
+  margin:0 auto;
+  padding-top:20px;
+}
+.nav__item {
+    display: table-cell;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}
+.nav__item + .nav__item {
+    border-left: 1px solid #CCC;
+}
+.nav__item a {
+    display: block;
+    padding: 10px 40px;
+    color: #666;
+    text-decoration: none;
+}

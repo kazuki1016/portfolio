@@ -12,6 +12,6 @@ setcookie(session_name(), '', time() - 42000,
   $params["httponly"]
 );
 session_destroy();
-
+set_message('ログアウトしました');
 redirect_to(HOME_URL);
 

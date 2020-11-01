@@ -1,6 +1,5 @@
 <?php
 
-
 // クロスサイトスクリプト対策として、出力する文字をエスケープ処理
 function h($item){
   return htmlspecialchars($item, ENT_QUOTES, 'UTF-8');
@@ -44,7 +43,7 @@ function get_post($name){
   };
   return '';
 }
-
+//投稿された画像ファイルデータを取得する　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 function get_file($name){
   if(isset($_FILES[$name]) === true){
     return $_FILES[$name];
@@ -57,6 +56,13 @@ function get_session($name){
     return $_SESSION[$name];
   };
   return '';
+}
+
+//登録が完了したらセッションを空にする
+function reset_session_user_resist($name, $password, $password_confirmation){
+  $_SESSION[$name] = "";
+  $_SESSION[$password] = "";
+  $_SESSION[$password_confirmation] = "";
 }
 
 function set_session($name, $value){

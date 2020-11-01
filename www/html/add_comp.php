@@ -14,7 +14,6 @@ $shop_name = get_post('shop_name');
 $genre_id = get_post('genre_id');
 $city_id = get_post('city_id');
 $image = get_file('image');
-var_dump($image);
 $token = get_post('token');
 $shop_detail = get_post('shop_detail');
 $user_id = get_post('user_id');

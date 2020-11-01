@@ -3,31 +3,8 @@
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
   <title>お店追加</title>
-  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'admin.css'); ?>">
+  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'add.css'); ?>">
 </head>
-<style>
-  label{
-    margin-bottom:none;
-  }
-  h3{
-    padding-top: 10px;
-    text-align: center;
-  }
-  .blank{
-    padding-bottom: 20px;
-  }
-  .submit{
-    text-align: center;
-    margin-top: 20px;
-  }
-  .btn-primary{
-    padding: 0.375rem 5.375rem;
-  }
-  .control-label{
-    padding-left: 0.5em;
-    border-left: solid 0.7em palevioletred;    
-  }
-</style>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
 
@@ -40,7 +17,7 @@
       <div class="panel-body">
         <form method="post" action="add_comp.php" enctype="multipart/form-data" class="signup_form mx-auto">
           <div class="form">
-            <label class="control-label form-child">店名（50字以内）</label>
+            <label class="control-label form-child">店名（50字以内、スペース含む）</label>
             <input class="form-control" type="text" name="shop_name">
           </div>
           <div class="blank">
@@ -77,7 +54,7 @@
           <div class="blank">
           </div>
           <div class="form">
-            <label class="control-label">お店の詳細情報（200字以内）</label>
+            <label class="control-label">お店の詳細情報（600字以内、スペース含む）</label>
             <textarea name="shop_detail" class="form-control" cols="30" rows="5"></textarea>
           </div>
           <div class = "submit">

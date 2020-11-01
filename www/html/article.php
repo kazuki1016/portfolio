@@ -9,7 +9,7 @@ require_once MODEL_PATH . 'shop.php';
 session_start();
 
 if(is_logined() === false){
-  redirect_to(HOME_URL);
+  redirect_to(LOGIN_URL);
 }
 
 $db = get_db_connect();

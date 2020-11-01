@@ -5,9 +5,19 @@ require_once MODEL_PATH . 'genre.php';
 require_once MODEL_PATH . 'city.php';
 
 // DB利用
+
+//登録されているお店idの取得
+function get_shop_id($db){
+  $sql = "
+    SELECT
+      shops.shop_id
+    FROM
+      shops
+  ";
+  return fetch_column_query($db, $sql);
+}
+
 // ユーザーが登録したお店一覧を取得する。
-
-
 function get_my_shoplist($db, $user_id){
   $sql = "
     SELECT
@@ -55,7 +65,7 @@ function get_shop_data($db, $shop_id){
   return fetch_all_query($db, $sql, array($shop_id));
 }
 
-// ユーザーが登録したお店一覧を取得する。
+// ユーザーが検索したお店一覧を取得する。
 function get_shop_data_by_name($db, $serch_shop_name){
   $sql = "
     SELECT
@@ -142,7 +152,7 @@ function get_shop_number_per_genre($db, $genre_id){
   return fetch_query($db, $sql, array($genre_id));
 }
 
-// 各ジャンルに属するお店の数の集計
+// 各市町村に属するお店の数の集計
 function get_shop_number_per_city($db, $city_id){
   $sql = "
     SELECT
@@ -156,6 +166,48 @@ function get_shop_number_per_city($db, $city_id){
   ";
   return fetch_query($db, $sql, array($city_id));
 }
+
+// お気に入りの登録。
+function insert_bookmark_list($db, $user_id, $shop_id){
+  $sql = "
+      INSERT INTO
+        bookmarks(
+          user_id,
+          shop_id
+        )
+      VALUES(?, ?);
+    ";
+    return execute_query($db, $sql, array($user_id, $shop_id));
+}
+
+// お気に入りの取得
+function get_bookmark_list($db, $user_id){
+  $sql = "
+    SELECT
+      bookmarks.user_id,
+      shops.shop_id, 
+      shops.shop_name,
+      shops.filename,
+      shops.shop_detail,
+      citys.city_id,
+      citys.city_name,
+      genres.genre_id,
+      genres.genre_name
+    FROM
+      ((( shops 
+    INNER JOIN 
+      citys ON shops.city_id = citys.city_id)
+    INNER JOIN 
+      genres ON shops.genre_id = genres.genre_id)
+    INNER JOIN 
+      bookmarks ON bookmarks.shop_id = shops.shop_id)
+    WHERE
+      bookmarks.user_id = ?
+  ";
+  return fetch_all_query($db, $sql, array($user_id));
+}
+
+
 
 // //並び替えのSQL
 // function cheap_order_items($db){
@@ -235,66 +287,8 @@ function insert_shop($db, $shop_name, $genre_id, $city_id, $shop_detail, $filena
     ";
     return execute_query($db, $sql, array($shop_name, $genre_id, $city_id, $shop_detail, $filename, $user_id));
 }
-// ここまでお店情報登録関係
 
-// function update_item_status($db, $item_id, $status){
-//     $sql = "
-//       UPDATE
-//         items
-//       SET
-//         status = ?
-//       WHERE
-//         item_id = ?
-//       LIMIT 1
-//     ";
-//     return execute_query($db, $sql, array($status, $item_id));
-// }
-
-// // SQLインジェクション対策としてステートメントに値をバインドする形式
-// function update_item_stock($db, $item_id, $stock){
-//     $sql = "
-//       UPDATE
-//         items
-//       SET
-//         stock = ?
-//       WHERE
-//         item_id = ?
-//       LIMIT 1
-//     ";
-//     return execute_query($db, $sql, array($stock, $item_id));
-//   }
-  
-
-// function destroy_item($db, $item_id){
-//   $item = get_item($db, $item_id);
-//   if($item === false){
-//     return false;
-//   }
-//   $db->beginTransaction();
-//   if(delete_item($db, $item['item_id'])
-//     && delete_image($item['image'])){
-//     $db->commit();
-//     return true;
-//   }
-//   $db->rollback();
-//   return false;
-// }
-
-// function delete_item($db, $item_id){
-//   $sql = "
-//     DELETE FROM
-//       items
-//     WHERE
-//       item_id = ?
-//     LIMIT 1;
-//   ";
-  
-//   return execute_query($db, $sql, array($item_id));
-// }
-
-
-// 非DB
-
+//お店登録時のバリデーション
 function validate_shop($shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $shop_detail, $filename, $user_id){  
   $is_valid_shop_name = is_valid_shop_name($shop_name);
   $is_valid_genre_id = is_valid_genre_id($genre_id, $genre_ids);
@@ -310,6 +304,126 @@ function validate_shop($shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $
     && $is_valid_shop_detail
     && $is_valid_user_id;
 }
+
+// ここまでお店情報登録関係
+
+// お店情報更新関係(画像あり)
+  /**お店情報更新一連の流れ
+   * get_upload_filename関数で投稿画像のfilenameの取得
+   * 更新されてきた値に対してvalidate_change_shop関数でバリデーション実施
+   * 更新のsql文の実行と画像ファイルの保存が成功したら処理完了
+   * */ 
+  function change_shop_full_data($db, $shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $shop_detail, $image, $shop_id, $shop_ids){
+    $filename = get_upload_filename($image);
+    if(validate_change_full_data($shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $shop_detail, $filename, $shop_id, $shop_ids) === false){
+      return false;
+    }
+    return validate_change_full_data_transaction($db, $shop_name, $genre_id, $city_id, $shop_detail, $image, $filename, $shop_id);
+  }
+
+  function validate_change_full_data_transaction($db, $shop_name, $genre_id, $city_id, $shop_detail, $image, $filename, $shop_id){
+    if(updata_shop_full($db, $shop_name, $genre_id, $city_id, $shop_detail, $filename, $shop_id)
+      && save_image($image, $filename)){
+      return true;
+    }
+    return false;
+  }
+
+  //更新のsql文の実行
+  function updata_shop_full($db, $shop_name, $genre_id, $city_id, $shop_detail, $filename, $shop_id){
+    $sql = "
+      UPDATE
+        shops
+      SET
+        shop_name = ?,
+        genre_id = ?,
+        city_id = ?,
+        shop_detail = ?,
+        filename = ?,
+        update_datetime = NOW()
+      WHERE
+        shop_id = ?
+      LIMIT 1
+    ";
+    return execute_query($db, $sql, array($shop_name, $genre_id, $city_id, $shop_detail, $filename, $shop_id));
+  }
+
+
+  //お店情報更新時のバリデーション
+  function validate_change_full_data($shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $shop_detail, $filename, $shop_id, $shop_ids){  
+    $is_valid_shop_name = is_valid_shop_name($shop_name);
+    $is_valid_genre_id = is_valid_id($genre_id, $genre_ids);
+    $is_valid_city_id = is_valid_id($city_id, $city_ids);
+    $is_valid_filename = is_valid_filename($filename);
+    $is_valid_shop_detail = is_valid_shop_detail($shop_detail);
+    $is_valid_shop_id = is_valid_id($shop_id, $shop_ids);
+
+    return $is_valid_shop_name
+      && $is_valid_genre_id
+      && $is_valid_city_id
+      && $is_valid_filename
+      && $is_valid_shop_detail
+      && $is_valid_shop_id;
+  }
+
+//お店情報更新関係(画像なし)
+
+  function change_shop_text_data($db, $shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $shop_detail, $shop_id, $shop_ids){
+    if(validate_change_text_data($shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $shop_detail, $shop_id, $shop_ids) === false){
+      return false;
+    }
+    return updata_shop_text($db, $shop_name, $genre_id, $city_id, $shop_detail, $shop_id);
+  }
+
+  //更新（画像なし）のsql文の実行
+  function updata_shop_text($db, $shop_name, $genre_id, $city_id, $shop_detail, $shop_id){
+    $sql = "
+      UPDATE
+        shops
+      SET
+        shop_name = ?,
+        genre_id = ?,
+        city_id = ?,
+        shop_detail = ?
+      WHERE
+        shop_id = ?
+      LIMIT 1
+    ";
+    return execute_query($db, $sql, array($shop_name, $genre_id, $city_id, $shop_detail, $shop_id));
+  }
+
+
+  //お店情報更新時（画像なし）のバリデーション
+  function validate_change_text_data($shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $shop_detail, $shop_id, $shop_ids){  
+    $is_valid_shop_name = is_valid_shop_name($shop_name);
+    $is_valid_genre_id = is_valid_id($genre_id, $genre_ids);
+    $is_valid_city_id = is_valid_id($city_id, $city_ids);
+    $is_valid_shop_detail = is_valid_shop_detail($shop_detail);
+    $is_valid_shop_id = is_valid_id($shop_id, $shop_ids);
+
+    return $is_valid_shop_name
+      && $is_valid_genre_id
+      && $is_valid_city_id
+      && $is_valid_shop_detail
+      && $is_valid_shop_id;
+  }
+// ここまでお店情報更新関係
+
+
+//お気に入り一覧からの削除
+function delete_bookmark($db, $shop_id){
+  $sql = "
+    DELETE FROM
+      bookmarks
+    WHERE
+      shop_id = ?
+    LIMIT 1;
+  ";
+  return execute_query($db, $sql, array($shop_id));
+}
+
+
+// 非DB
 
 // 店名のバリデーション
 function is_valid_shop_name($shop_name){
@@ -340,6 +454,16 @@ function is_valid_city_id($city_id, $city_ids){
   }
   return $is_valid;
 }
+
+// IDのバリデーション
+function is_valid_id($value, $values){
+  $is_valid = true;
+  if(in_array($value, $values) === false){
+    set_error('登録されていない値が渡されました');
+    $is_valid = false;
+  }
+  return $is_valid;
+}
 // 登録者のバリデーション
 function is_valid_user_id($user_id){
   $is_valid = true;
@@ -363,7 +487,7 @@ function is_valid_filename($filename){
 function is_valid_shop_detail($shop_detail){
   $is_valid = true;
   if(is_valid_length($shop_detail, SHOP_DETAIL_LENGTH_MIN, SHOP_DETAIL_LENGTH_MAX) === false){
-    set_error('お店情報は'. SHOP_DETAIL_LENGTH_MIN . '文字以上、' . SHOP_DETAIL_LENGTH_MAX . '文字以内にしてください。');
+    set_error('お店情報は'. SHOP_DETAIL_LENGTH_MIN . '文字以上、' . SHOP_DETAIL_LENGTH_MAX . '文字以内にしてください。（スペースもカウントします）');
     $is_valid = false;
   }
   return $is_valid;

@@ -2,89 +2,63 @@
 <html lang="ja">
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
-
   <title>〜静岡の抹茶スイーツを堪能しよう〜</title>
-  <link rel="stylesheet" href="../html/assets/css/index.css">
-
+  <link rel="stylesheet" href="<?php print (STYLESHEET_PATH . 'index.css'); ?>">
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
-  <div class ="jumbotron text-center"  
-         style="background:url(top2.jpeg); 
-                background-size:cover;
-                height: 750px;
-                color: white;
-                
+  <div class ="jumbotron"  
         ">
     <h1>〜ようこそ,みんなで作る静岡の抹茶の世界へ〜</h1>
   </div>
-  <div class="container" style="max-width: 1400px;" >
+  <div class="container">
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <div class="row">
-
-      <div class="col-3" style="border:  thin solid grey; margin-right: 30px;"> 
+      <div class="col-3"> 
         <div>
           <?php if(is_logined() === true) {?>
-            <h5 class="p-1 mb-1 bg-white text-dark"
-            style="text-align: center;
-                  margin-top: 10px">  
-              ようこそ、<?php print($user['user_name']); ?>さん。
-            </h5>
-            <div style="text-align: center;">
-              <form method="POST" action="mypage.php">
-                <button type="submit" class="btn btn-success w-75" >マイページへ</button>           
-              </form> 
+            <h6 class="p-1 mb-1 bg-white text-dark"> ようこそ、<?php print($user['user_name']); ?>さん。</h6>
+            <div class="action_button">
+              <a class="btn btn-success" href="<?php print(MYPAGE_URL);?>" role="button" >マイページへ</a>         
             </div>
           <?php }else { ?>
-            <h5 class="p-1 mb-1 bg-white text-dark"
-            style="text-align: center;
-                  margin-top: 10px">  
-              ようこそ、ゲストさん。<br><br>
-              ★会員の方はこちら👇
-              <div style="text-align: center; margin: 10px;";>
-                <a class="btn btn-primary" href="login.php" role="button" >ログイン</a>
+            <h6 class="p-1 mb-1 bg-white text-dark"> ようこそ、ゲストさん。</h6>
+            <p class="p-1 mb-1 bg-white text-dark"> 会員の方はこちら👇</p>
+              <div class="action_button">
+                <a class="btn btn-dark" href="<?php print(LOGIN_URL);?>" role="button" >ログイン</a>
               </div>
-              ★会員登録はこちら👇
-              <div style="text-align: center; margin: 10px;";>
-                <a class="btn btn-secondary" href="signup.php" role="button" >新規登録</a>
+            <p class="p-1 mb-1 bg-white text-dark">会員の方はこちら👇</p>
+              <div class="action_button">
+                <a class="btn btn-secondary" href="<?php print(SIGNUP_URL);?>" role="button" >新規登録</a>
               </div>
-            <?php } ?>
+          <?php } ?>
         </div>
-        <h5 class="p-1 mb-1 bg-white text-dark"
-            style="text-align: center;
-                   margin-top: 10px">  
-          ★お店を探す
-        </h5>
+        <h6 class="p-1 mb-1 bg-white text-dark"">お店を探す</h6>
         <p>ジャンルから探す</p>
-        <form method="GET" action="shop_genre_list.php" class="form-inline" target="_blank" style="margin-bottom:10px;">
+        <form method="GET" action="shop_genre_list.php" class="form-inline" target="_blank">
           <select name="genre_id" class="form-control">
             <option disabled selected>選択してください</option>
             <?php foreach($genres as $genre) { ?>
               <option value="<?php print h($genre['genre_id']); ?>"><?php print h($genre['genre_name']."({$genre['shop_number_per_genre']})"); ?></option>
             <?php } ?>
           </select>
-          <input type="submit" class="btn btn-primary" value="検索" style="margin-left: 10px;">
+          <input type="submit" class="btn btn-primary serch_button" value="検索">
         </form>
-
-        <form method="GET" action="shop_city_list.php" class="form-inline" style="margin-bottom:10px;">
-          <p>市町村から探す</p>
+        <p>市町村から探す</p>
+        <form method="GET" action="shop_city_list.php" class="form-inline">
           <select name="city_id" class="form-control" >
             <option disabled selected>選択してください</option>
             <?php foreach($_SESSION['citys'] as $city) { ?>
               <option value="<?php print h($city['city_id']); ?>"><?php print h($city['city_name']."({$city['shop_number_per_city']})"); ?></option>
               <?php } ?>
           </select>
-          <input type="submit" class="btn btn-primary" value="検索" style="margin-left: 10px;">
+          <input type="submit" class="btn btn-primary" value="検索">
         </form>
       </div>
       <div class="col-8" style="border:  thin solid grey;"> 
-        <h5 class="p-1 mb-1 bg-white text-dark"
-            style="margin-top: 10px;
-                  ">  
-          ★新着情報
-       </h5>
+        <h6 class="p-1 mb-1 bg-white text-dark">新着情報</h6>
        <div>
-        <table class="table table-borderless" style="text-align: center;">
+        <table class="table table-borderless">
           <thead>
             <tr>
               <th>写真</th>
@@ -104,14 +78,10 @@
             </tr>
           </tbody>
         </table>
-       </div>
-       <h5 class="p-1 mb-1 bg-white text-dark"
-       style="margin-top: 10px;
-             ">  
-     ★トピックス
-       </h5>
-       <div>
-        <table class="table table-borderless" style="text-align: center;">
+      </div>
+      <h6 class="p-1 mb-1 bg-white text-dark"style="margin-top: 10px;">トピックス</h6>
+      <div>
+      <table class="table table-borderless">
           <thead>
             <tr>
               <th>写真</th>
@@ -131,14 +101,11 @@
             </tr>
           </tbody>
         </table>
-       </div>
-       <h5 class="p-1 mb-1 bg-white text-dark"
-       style="margin-top: 10px;
-             ">  
-     ★あなたへのオススメ抹茶スイーツ
-       </h5>
-       <div>
-        <table class="table table-borderless" style="text-align: center;">
+      </div>
+      <h6 class="p-1 mb-1 bg-white text-dark">あなたへのオススメ抹茶スイーツ
+      </h6>
+      <div>
+        <table class="table table-borderless">
           <thead>
             <tr>
               <th>写真</th>
@@ -158,38 +125,33 @@
             </tr>
           </tbody>
         </table>
-       </div>
-       <h5 class="p-1 mb-1 bg-white text-dark"
-       style="margin-top: 10px;
-             ">  
-     ★Twitter情報
-       </h5>
-       <div>
-        <table class="table table-borderless" style="text-align: center;">
-          <thead>
-            <tr>
-              <th>写真</th>
-              <th>写真</th>
-              <th>写真</th>
-              <th>写真</th>
-              <th>写真</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>説明</td>
-              <td>説明</td>
-              <td>説明</td>
-              <td>説明</td>
-              <td>説明</td>
-            </tr>
-          </tbody>
-        </table>
-       </div>
-
+      </div>
+      <h6 class="p-1 mb-1 bg-white text-dark">Twitter情報</h6>
+      <div>
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th>写真</th>
+                <th>写真</th>
+                <th>写真</th>
+                <th>写真</th>
+                <th>写真</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>説明</td>
+                <td>説明</td>
+                <td>説明</td>
+                <td>説明</td>
+                <td>説明</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
-  
 </body>
 <?php include VIEW_PATH . 'templates/footer.php'; ?>
 </html>

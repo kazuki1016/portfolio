@@ -2,14 +2,13 @@
 <html lang="ja">
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
+  <link rel="stylesheet" href="<?php print (STYLESHEET_PATH .'login.css'); ?>">
   <title>ログイン</title>
-  <link rel="stylesheet" href="css/login.css">
-
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header.php'; ?>
   <div class="container">
-    <h3>ログイン</h3>
+    <h4>登録した名前とパスワードを入力してください</h4>
     <?php include VIEW_PATH. 'templates/messages.php'; ?>
     <form method="post" action="login_process.php" class="login_form mx-auto">
       <div class="form-group control-label">
@@ -18,17 +17,20 @@
       </div>
       <div class="blank">
       </div>
-
       <div class="form-group control-label">
         <label for="password">パスワード: </label>
         <input type="password" name="password" id="password" class="form-control">
+        <input type="checkbox" id="password-check">
+        パスワードを表示する 
       </div>
       <div class="blank">
       </div>
-      <input type="submit" value="ログイン" class="btn btn-primary">
-      <!-- クロスサイトリクエストフォージェリ対策、生成したトークンを遷移先へ送る -->
-      <input type="hidden" name ="token"  value="<?php print h($token);?>" >
+      <div class = "submit">
+        <input type="submit" value="ログイン" class="btn btn-primary">
+        <input type="hidden" name ="token"  value="<?php print h($token);?>" >
+      </div>
     </form>
   </div>
+  <script src ="<?php print (JAVASCRIPT_PATH . 'password.js'); ?>"></script>
 </body>
 </html>

@@ -23,7 +23,7 @@
     margin-right: auto;
     margin-bottom: 40px;
   } */
-  h3{
+  h5{
     padding-top: 20px;
   }
   .nav__item {
@@ -67,14 +67,9 @@
   .table th{
     border:none;
   } 
-  .table th{
-    text-align: center;
-  } 
   .table td{
-    width:70%;
     vertical-align:middle;
-    padding: 20px 10px;
-  } 
+  }
   .shop_list a{
     font-size: 25px;
     padding-left: 0.5em;
@@ -89,10 +84,6 @@
   .btn_mypage{
     margin-right: 20px;
   }
-  .genre_city{
-    text-align: center;
-  }
-
 </style>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
@@ -101,7 +92,13 @@
     <div class="row main">
   </div>
   <div class="main_border">
+    <?php if(isset($shop_name)){ ?>
       <h5>「<?php print h($shop_name)?>」の検索結果</h5>
+    <?php } else if(isset($genre_id)) { ?>
+      <h5>「<?php print h($shops[0]['genre_name'])?>」の検索結果</h5>
+    <?php } else if(isset($city_id)) { ?>
+      <h5>「<?php print h($shops[0]['city_name'])?>」の検索結果</h5>
+    <?php } ?>
       </div>
         <table class="table">
           <thead>
@@ -114,21 +111,31 @@
           <tbody>
            <?php foreach($shops as $shop){?>
             <tr>
-              <td class="shop_list"><a href="shop.php?shop_id=<?php print h($shop['shop_id'])?>"><?php print h($shop['shop_name'])?></a></td>
-              <td class="genre_city"><a href="shop.php?genre_name=<?php print h($shop['genre_name'])?>"><?php print h($shop['genre_name'])?></a>/
-                                     <a href="shop.php?city_name=<?php print h($shop['city_name'])?>"><?php print h($shop['city_name'])?></a>
+              <td>
+                <div class="shop_list">
+                  <a href="shop.php?shop_id=<?php print h($shop['shop_id'])?>"><?php print h($shop['shop_name'])?></a>
+                </div>
+              </td>
+              <td class="genre_city">
+                <div>
+                  <a href="shop_genre_list.php?genre_id=<?php print h($shop['genre_id'])?>"><?php print h($shop['genre_name'])?></a>/
+                  <a href="shop_city_list.php?city_id=<?php print h($shop['city_id'])?>"><?php print h($shop['city_name'])?></a>
+                </div>
               </td>
               <td>
                 <div class="mypage_form">
-                  <form method="POST" action="edit.php"><input type="submit" value="編集する" class="btn btn-primary btn_mypage"><input type="hidden" value=""></form>
-                  <form method="POST" action="bookmark.php"><input type="submit" value="❤お気に入りへ" class="btn btn-success btn_mypage"><input type="hidden" value=""></form>
-                  <form method="POST" action="mypage_delete.php"><input type="submit" value="お店の削除" class="btn btn-secondary btn_mypage"><input type="hidden" value=""></form>
+                <?php if(in_array($shop['shop_id'], $_SESSION['bookmarked_shop_ids'])===false){?>   <!--既にお気に入り済みならお気に入りボタンを表示させない  -->
+                  <form method="POST" action="bookmark.php">
+                    <input type="submit" value="❤お気に入りへ" class="btn btn-success btn_mypage">
+                    <input type="hidden" name="shop_id" value="<?php print h($shop['shop_id'])?>">
+                  </form>
+                <?php } ?>
                 </div>
               </td>
             </tr>
             <tr>
               <td><img src="<?php print h(IMAGE_PATH . $shop['filename'])?>"></td>
-              <td colspan="2"><?php print h($shop['shop_detail'])?></td>
+              <td colspan="2"><?php print (nl2br(h($shop['shop_detail']))) ?></td>
             </tr>            
             <?php } ?>
           </tbody>

@@ -1,11 +1,11 @@
-  .container{
-    max-width: 600px;
+  .container {
+    max-width: 800px;
   }
   label{
     margin-bottom:none;
   }
-  h3{
-    padding-top: 30px;
+  h4{
+    padding: 30px 0;
     text-align: center;
   }
   .blank{
