@@ -19,6 +19,11 @@ function get_shop_id($db){
 
 // ユーザーが登録したお店一覧を取得する。
 function get_my_shoplist($db, $user_id){
+  if($user_id !== 5){ //管理者は全てのお店情報を見ることができて、それ以外のユーザーは自分が追加したお店しか見れない
+    $where = ' WHERE user_id = ? ';
+  } else {
+    $where = '';
+  }
   $sql = "
     SELECT
       shops.shop_id, 
@@ -35,10 +40,13 @@ function get_my_shoplist($db, $user_id){
         citys ON shops.city_id = citys.city_id)
     INNER JOIN 
       genres ON shops.genre_id = genres.genre_id)
-    WHERE
-      user_id = ?
+    {$where}
   ";
-  return fetch_all_query($db, $sql, array($user_id));
+  if($user_id !== 5){ 
+    return fetch_all_query($db, $sql, array($user_id));
+  } else {
+    return fetch_all_query($db, $sql, array());
+  }
 }
 
 // お店情報を取得する。
@@ -410,6 +418,19 @@ function validate_shop($shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $
 // ここまでお店情報更新関係
 
 
+//お店削除関係
+  function delete_shop($db, $shop_id){
+    $sql = "
+      DELETE FROM
+        shops
+      WHERE
+        shop_id = ?
+      LIMIT 1;
+    ";
+    return execute_query($db, $sql, array($shop_id));
+  }
+
+  
 //お気に入り一覧からの削除
 function delete_bookmark($db, $shop_id){
   $sql = "

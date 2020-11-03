@@ -16,9 +16,7 @@
           <li class="nav__item"><a href="add.php">お店登録へ</a></li>
       </div>
     </div>
-    <div class="main_border">
-      <h5>「<?php print h($user['user_name'])?>」さんのお気に入り一覧</h5>
-    </div>
+    <h5>「<?php print h($user['user_name'])?>」さんのお気に入り一覧</h5>
     <table class="table table-borderless">
       <thead>
         <tr class="table_head">
@@ -49,7 +47,7 @@
 
           </td>
         </tr>
-        <tr class="border-bottom ">
+        <tr class="border-bottom">
           <td class="align-top detail" colspan="2"><?php print (nl2br(h($bookmark_list['shop_detail']))) ?></td>
           <td><img src="<?php print h(IMAGE_PATH . $bookmark_list['filename'])?>"></td>
         </tr>            

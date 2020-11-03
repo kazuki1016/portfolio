@@ -1,0 +1,15 @@
+@import url('css_parts/table_parts.css');
+@import url('css_parts/mypage_parts.css');
+
+.container h5{
+  padding-top: 30px;
+}
+.shop_list {
+  width: 65%;
+}
+.genre_city {
+  width: 20%;
+}
+.table_buttons  {
+  width: 15%;
+}

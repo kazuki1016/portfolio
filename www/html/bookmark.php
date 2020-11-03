@@ -13,9 +13,8 @@ if(is_logined() === false){
 $db = get_db_connect();
 $token = get_csrf_token();
 $user = get_login_user($db);
-$shop_id = get_post('shop_id');
+$shop_id = get_data('shop_id');
 $user_id = get_session('user_id');
-var_dump($shop_id);
 
 if(!empty($shop_id)){
   if(insert_bookmark_list($db, $user_id, $shop_id)){
