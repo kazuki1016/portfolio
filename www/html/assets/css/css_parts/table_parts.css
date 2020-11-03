@@ -8,24 +8,43 @@
   vertical-align:middle;
   padding: .30em;
 } 
-.table tr{
-  /* vertical-align:middle; */
-  padding: 0.10em 0;
+ tr{
+  border-bottom: 1px solid rgb(212, 212, 212)
 } 
 .shop_list {
   width: 60%;
 }
 .shop_list a{
-  font-size: 25px;
+  font-size: 20px;
   padding-left: 0.5em;
   border-left: solid 0.7em palevioletred;
+}
+.genre_city{
+  text-align: center;
+}
+table .btn{
+  font-size:14px ;
+  width: 70%;
+  margin: 2% 0;  
 }
 .delite{
   margin-top:15px ;
 }
 .detail{
-  width: 90%;
+  /* width: 90%; */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  font-size:16px ;
+
+}
+.image_space{
+  max-width: 60%;
+  margin: auto;
+  border: 1px solid gray;
+  padding: 5px;
 }
 .table img{
-  max-width: 90%;
+  max-width: 100%;
 }

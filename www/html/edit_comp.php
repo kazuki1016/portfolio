@@ -52,10 +52,14 @@ if(empty($image['name'])){  //$imageにはすでに配列が入っているの�
   $db->beginTransaction();
     if(change_shop_full_data($db, $shop_name, $genre_id, $genre_ids, $city_id, $city_ids, $shop_detail, $image, $shop_id, $shop_ids)
       && file_exists(IMAGE_DIR.$current_image)){
-      $db->commit();
-      unlink(IMAGE_DIR.$current_image);
-      set_message('編集が完了しました。');
-      redirect_to(MYPAGE_URL);
+      if(unlink(IMAGE_DIR.$current_image)){
+        $db->commit();
+        set_message('編集が完了しました。');
+        redirect_to(MYPAGE_URL);
+      } else {
+        $db->rollback();
+        set_error('画像削除ができません。管理者にお問い合わせください。');
+      }
     } else{
       $db->rollback();
       set_error('編集に失敗しました。');

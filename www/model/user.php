@@ -33,6 +33,20 @@ function get_user_by_name($db, $name){
 
   return fetch_query($db, $sql, array($name));
 }
+
+function get_user_list($db){
+  $sql = "
+    SELECT
+      user_id, 
+      user_name,
+      DATE_FORMAT(create_datetime,'%Y/%m/%d') AS create_date
+    FROM
+      userinfo
+  ";
+
+  return fetch_all_query($db, $sql, array());
+}
+
 function get_registed_names($db){
   $sql = "
     SELECT

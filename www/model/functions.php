@@ -66,6 +66,9 @@ function reset_session_user_resist($name, $password, $password_confirmation){
 }
 
 function set_session($name, $value){
+  if(!isset($value)){  //もしnullだったら空の配列とする。
+    return$_SESSION[$name] = array();
+  }
   $_SESSION[$name] = $value;
 }
 

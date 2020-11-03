@@ -6,13 +6,6 @@ require_once MODEL_PATH . 'shop.php';
 
 session_start();
 
-// if(is_logined() === false){
-//   redirect_to(HOME_URL);
-// // }
-// print('<pre>');
-// var_dump($_SESSION);
-// print('<pre>');
-
 $db = get_db_connect();
 $token = get_csrf_token();
 $user = get_login_user($db);
@@ -53,6 +46,8 @@ for($i=0; $i<count($citys); $i++){
   }
 }
 set_session('citys', $citys);
-var_dump($_SESSION);
+// var_dump($_SESSION);
+var_dump($_SESSION['my_shoplists_ids']);
+var_dump($_SESSION['bookmarked_shop_ids']);
 
 include_once VIEW_PATH . 'index_view.php';

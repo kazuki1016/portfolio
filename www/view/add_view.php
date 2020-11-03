@@ -11,7 +11,7 @@
   <div class="container">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3>あなたの知ってるお店情報を入力してください！</h3>
+        <h4>あなたの知ってるお店情報を入力してください！</h4>
         <?php include VIEW_PATH . 'templates/messages.php'; ?>
       </div>
       <div class="panel-body">
