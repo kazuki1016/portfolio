@@ -4,41 +4,16 @@
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
   <title>お店編集</title>
-  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'admin.css'); ?>">
+  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'edit.css'); ?>">
 </head>
 <style>
-  label{
-    margin-bottom:none;
-  }
-  h5{
-    padding-top: 10px;
-    text-align: center;
-  }
-  .blank{
-    padding-bottom: 20px;
-  }
-  .submit{
-    text-align: center;
-    margin-top: 20px;
-  }
-  .btn-primary{
-    padding: 0.375rem 5.375rem;
-  }
-  .control-label{
-    padding-left: 0.5em;
-    border-left: solid 0.7em palevioletred;    
-  }
-  img{
-    border:1px solid;
-  }
-</style>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
 
   <div class="container">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h5><?php print h($edit_shop[0]['shop_name']) ?>の編集</h5>
+        <h4><?php print h($edit_shop[0]['shop_name']) ?>の編集</h4>
         <?php include VIEW_PATH . 'templates/messages.php'; ?>
       </div>
       <div class="panel-body">
@@ -87,7 +62,7 @@
           <div class="form">
             <label class ="control-label">現在の画像</label>
             <p>
-              <img src="<?php print h(IMAGE_PATH . $edit_shop[0]['filename'])?>" title="現在の投稿画像" width="30%" height="30%">
+              <img class="image_space" src="<?php print h(IMAGE_PATH . $edit_shop[0]['filename'])?>" title="現在の投稿画像">
             </p>
           </div>
           <div class="form">

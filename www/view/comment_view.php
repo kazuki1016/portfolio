@@ -69,7 +69,7 @@
         <table class="table table-borderless">
           <tbody>
             <tr class="head">
-              <th><?php print h($comment['user_name']) ?>さんの口コミ</th>
+              <th><?php print h($user['user_name']) ?>さんの口コミ</th>
             </tr>
             <tr>
               <th><?php print h($comment['comment_date']) ?>投稿</th>

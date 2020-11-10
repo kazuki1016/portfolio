@@ -11,8 +11,8 @@
   <div class="container">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4>あなたの知ってるお店情報を入力してください！</h4>
         <?php include VIEW_PATH . 'templates/messages.php'; ?>
+        <h4>あなたの知ってるお店情報を入力してください！</h4>
       </div>
       <div class="panel-body">
         <form method="post" action="add_comp.php" enctype="multipart/form-data" class="signup_form mx-auto">

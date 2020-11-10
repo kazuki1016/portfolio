@@ -12,10 +12,10 @@
     <h5>お店管理ページ</h5>
     <div class="row main">
       <div class="col-7 nav__item">
-          <li class="nav__item"><a href="mypage.php">お店管理ページへ</a></li>
-          <li class="nav__item"><a href="resistuser_list.php">ユーザ一覧へ</a></li>
-          <li class="nav__item"><a href="impression_list.php">口コミ一覧へ</a></li>
-          <li class="nav__item"><a href="add.php">お店登録へ</a></li>
+        <li class="nav__item"><a href="mypage.php">お店管理ページ</a></li>
+        <li class="nav__item"><a href="registuser_list.php">ユーザー管理ページ</a></li>
+        <li class="nav__item"><a href="comment_list.php">口コミ管理ページ</a></li>
+        <li class="nav__item"><a href="add.php">お店登録へ</a></li>
       </div>
     </div>
     <div class="main_border">

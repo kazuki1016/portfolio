@@ -29,5 +29,3 @@ if(delete_shop($db, $shop_id) && file_exists(IMAGE_DIR.$filename)){
   set_error('お店を削除に失敗しました');
 }
 
-include_once VIEW_PATH . 'add_comp_view.php';
-

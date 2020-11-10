@@ -1,0 +1,22 @@
+@import url('css_parts/table_parts.css');
+@import url('css_parts/mypage_parts.css');
+
+table{
+  text-align: center;
+  font-size: 16px;
+}
+.comment_id {
+  width: 10%;
+}
+.comment_title {
+  width: 40%;
+}
+.comment_shop_name {
+  width: 30%;
+}
+.comment_user_name {
+  width: 10%;
+}
+.comment_date  {
+  width: 10%;
+}

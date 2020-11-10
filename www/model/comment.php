@@ -35,16 +35,18 @@ function get_comment($db, $shop_id){
   $sql = "
     SELECT 
       comments.comment_id, 
-      comments.user_id, 
       comments.shop_id, 
       comments.comment_title, 
       comments.comment_body, 
       DATE_FORMAT(comments.create_datetime,'%Y/%m/%d') AS comment_date,
-      shops.shop_name
+      shops.shop_name,
+      userinfo.user_name 
     FROM 
-      comments
+      ((comments
     INNER JOIN 
-      shops ON comments.shop_id = shops.shop_id
+      shops ON comments.shop_id = shops.shop_id)
+    INNER JOIN 
+      userinfo ON comments.user_id = userinfo.user_id)
     WHERE 
       comments.shop_id = ?;
   ";
@@ -61,6 +63,26 @@ function get_comment_image($db, $comment_id){
       comment_images.comment_id = ?;
   ";
   return fetch_all_query($db, $sql, array($comment_id));
+}
+
+//管理者ページのコメント一覧表示
+function get_comment_list($db){
+  $sql = "
+    SELECT 
+    comments.comment_id, 
+    comments.comment_title, 
+    DATE_FORMAT(comments.create_datetime,'%Y/%m/%d') AS create_date,
+    DATE_FORMAT(comments.update_datetime,'%Y/%m/%d') AS update_date,
+    userinfo.user_name, 
+    shops.shop_name
+    FROM 
+      ((comments
+    INNER JOIN 
+      shops ON comments.shop_id = shops.shop_id)
+    INNER JOIN
+      userinfo ON comments.user_id = userinfo.user_id)
+  ";
+  return fetch_all_query($db, $sql, array());
 }
 
 
