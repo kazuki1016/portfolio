@@ -1,0 +1,10 @@
+@import url('css_parts/form_parts.css');
+
+select{
+  border: 1px solid gray;
+}
+.image_space{
+  max-width: 30%;
+  margin: auto;
+  border: 1px solid gray;
+  padding: 5px;

@@ -33,8 +33,7 @@ if( $user === false){
 }
 
 set_message('ログインしました。');
-// if ($user['type'] === USER_TYPE_ADMIN){
-//   redirect_to(ADMIN_URL);
-// }
+if ($user['user_name'] === "admin"){
+  redirect_to(MYPAGE_URL);
+}
 redirect_to(HOME_URL);
-// var_dump($user);

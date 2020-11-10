@@ -9,33 +9,15 @@
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <div class="container">
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
-    <?php if($user['user_name'] === "admin"){ ?>
       <h5>お店管理ページ</h5>
-      <div class="row main">
-        <div class="col-7 nav__item">
-          <li class="nav__item"><a href="mypage.php">お店管理ページ</a></li>
-          <li class="nav__item"><a href="resistuser_list.php">ユーザー一覧</a></li>
-          <li class="nav__item"><a href="comment_list.php">口コミ管理ページ</a></li>
-          <li class="nav__item"><a href="add.php">お店登録へ</a></li>
-        </div>
-      </div>
-    <?php } else { ?>
-      <h5><?php print h($user['user_name']); ?>さんのマイページ</h5>
-      <div class="row main">
-        <div class="col-7 nav__item">
-          <li class="nav__item"><a href="mypage.php">マイページトップへ</a></li>
-          <li class="nav__item"><a href="bookmark.php">お気に入り一覧へ</a></li>
-          <li class="nav__item"><a href="add.php">お店登録へ</a></li>
-        </div>
-      </div>
-    <?php } ?>
+      <?php include VIEW_PATH . 'templates/header_mypage.php'; ?>
     <div class="main_border">
       <h5>投稿したお店</h5>
     </div>
     <?php if(count($my_shoplists)===0) { ?>
       <p>登録したお店はまだありません</p>
     <?php } else { ?>
-      <table class="table table-borderless table-responsive" >
+      <table class="table table-borderless table-responsive-xl" >
         <thead>
           <tr class="table_head">
             <th>店名</th>
