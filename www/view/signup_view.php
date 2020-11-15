@@ -6,7 +6,7 @@
   <title>会員登録</title>
 </head>
 <body>
-  <?php include VIEW_PATH . 'templates/header.php'; ?>
+  <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <div class="container">
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <h4>会員登録フォーム</h4>

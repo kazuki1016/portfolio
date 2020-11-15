@@ -3,7 +3,7 @@
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
   <title>口コミ投稿</title>
-  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'add.css'); ?>">
+  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'article.css'); ?>">
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
@@ -12,7 +12,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
       <?php include VIEW_PATH . 'templates/messages.php'; ?>
-      <h3><?php print h($shop[0]['shop_name'])?>の口コミ投稿</h3>
+      <h4><?php print h($shop[0]['shop_name'])?>の口コミ投稿</h4>
       </div>
       <div class="panel-body">
         <form method="POST" action="article_comp.php" enctype="multipart/form-data" class="signup_form mx-auto">

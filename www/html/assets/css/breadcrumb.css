@@ -1,0 +1,15 @@
+.breadcrumb{
+  background-color:rgb(200, 202, 204);
+}
+.breadcrumb a{/* 文字色 */
+	color:#000;
+}
+.breadcrumb-item.active{/* アクティブ文字色の変更 */
+	color:rgb(32, 155, 226);
+}
+.breadcrumb-item+.breadcrumb-item::before{/* 区切り線の文字色変更 */
+	color:#000;
+}
+.breadcrumb-item+.breadcrumb-item::before{/*区切り線の変更*/
+  content: ">";
+}

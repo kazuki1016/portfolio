@@ -9,13 +9,7 @@
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <div class="container" >
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
-    <div class="row main">
-      <div class="col-7 nav__item">
-          <li class="nav__item"><a href="mypage.php">マイページトップへ</a></li>
-          <li class="nav__item"><a href="bookmark.php">お気に入り一覧へ</a></li>
-          <li class="nav__item"><a href="add.php">お店登録へ</a></li>
-      </div>
-    </div>
+    <?php include VIEW_PATH . 'templates/header_mypage.php'; ?>
     <h5>「<?php print h($user['user_name'])?>」さんのお気に入り一覧</h5>
     <table class="table table-borderless">
       <thead>
@@ -36,6 +30,12 @@
             <a href="shop_city_list.php?city_id=<?php print h($bookmark_list['city_id'])?>"><?php print h($bookmark_list['city_name'])?></a>              
           </td>
           <td>
+          </td>
+        </tr>
+        <tr class="border-bottom">
+          <td class="align-top detail" colspan="2"><?php print (nl2br(h($bookmark_list['shop_detail']))) ?></td>
+          <td><img src="<?php print h(IMAGE_PATH . $bookmark_list['filename'])?>"></td>
+          <td>
             <div class="delite">
               <form method="POST" action="bookmark_delite.php">
                 <input type="submit" value="お気に入りから削除" class="btn btn-secondary btn_mypage">
@@ -43,13 +43,7 @@
               </form>
             </div>
           </td>
-          <td>
 
-          </td>
-        </tr>
-        <tr class="border-bottom">
-          <td class="align-top detail" colspan="2"><?php print (nl2br(h($bookmark_list['shop_detail']))) ?></td>
-          <td><img src="<?php print h(IMAGE_PATH . $bookmark_list['filename'])?>"></td>
         </tr>            
         <?php } ?>
       </tbody>

@@ -8,21 +8,13 @@
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <div class="container " >
-  <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <h5>口コミ管理ページ</h5>
-    <div class="row main">
-      <div class="col-7 nav__item">
-        <li class="nav__item"><a href="mypage.php">お店管理ページ</a></li>
-        <li class="nav__item"><a href="registcomment_list.php">ユーザー管理ページ</a></li>
-        <li class="nav__item"><a href="comment_list.php">口コミ管理ページ</a></li>
-        <li class="nav__item"><a href="add.php">お店登録へ</a></li>
-      </div>
-    </div>
+    <?php include VIEW_PATH . 'templates/header_mypage.php'; ?>
     <div class="main_border">
-      <h5>口コミ一覧</h5>
+      <p>口コミ一覧</p>
     </div>
     <?php if(count($comment_lists) === 0) { ?>
-      <p>まだ登録されていません</p>
+      <p>まだ口コミはありません</p>
     <?php } else { ?>
       <p>総口コミ数：<?php print h(count($comment_lists))  ?></p>
       <table class="table table-borderless">

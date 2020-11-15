@@ -46,8 +46,10 @@ for($i=0; $i<count($citys); $i++){
   }
 }
 set_session('citys', $citys);
-// var_dump($_SESSION);
-var_dump($_SESSION['my_shoplists_ids']);
-var_dump($_SESSION['bookmarked_shop_ids']);
+ 
+//新着の店名と画像を取得する
+$new_shops = get_new_shops($db);
+// トピックスのお店情報(コメントが多いお店)を取得する
+$topic_shops = get_topic_shop_data($db);
 
 include_once VIEW_PATH . 'index_view.php';

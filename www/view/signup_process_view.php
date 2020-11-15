@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'signup_process.css'); ?>">
 </head>
 <body>
-  <?php include VIEW_PATH . 'templates/header.php'; ?>
+  <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <div class="container">
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <h4>会員登録入力確認ページ</h4>

@@ -9,11 +9,13 @@
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <div class="container">
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
+    <?php if($user['user_name']==="admin") { ?>
       <h5>お店管理ページ</h5>
-      <?php include VIEW_PATH . 'templates/header_mypage.php'; ?>
-    <div class="main_border">
-      <h5>投稿したお店</h5>
-    </div>
+    <?php } else { ?>
+      <h5><?php print h($user['user_name'])?>さんのマイページ</h5>
+    <?php } ?>
+    <?php include VIEW_PATH . 'templates/header_mypage.php'; ?>
+    <h5>投稿したお店</h5>
     <?php if(count($my_shoplists)===0) { ?>
       <p>登録したお店はまだありません</p>
     <?php } else { ?>
@@ -47,8 +49,10 @@
               </td>
               <td>
                 <a class="btn btn-primary btn_mypage" href="edit_shop.php?shop_id=<?php print h($my_shoplist['shop_id']);?>">編集する</a>         
-                <?php if(in_array($my_shoplist['shop_id'], $_SESSION['bookmarked_shop_ids'])===false) {?>   <!--既にお気に入り済みならお気に入りボタンを表示させない  -->
-                  <a class="btn btn-success btn_mypage" href="bookmark.php?shop_id=<?php print h($my_shoplist['shop_id']);?>">お気に入りへ</a>         
+                <?php if($user['user_name']!=="admin") {?>   
+                  <?php if(in_array($my_shoplist['shop_id'], $_SESSION['bookmarked_shop_ids'])===false) {?>   
+                    <a class="btn btn-success btn_mypage" href="bookmark.php?shop_id=<?php print h($my_shoplist['shop_id']);?>">お気に入りへ</a>         
+                  <?php } ?>
                 <?php } ?>
                 <form method="GET" action="shop_delete.php">
                   <input type="submit" class="btn btn-secondary btn_mypage" value="削除" >         

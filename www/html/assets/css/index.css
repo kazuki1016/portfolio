@@ -1,15 +1,22 @@
+@import url('css_parts/index_table_parts.css');
+.body{
+  background-color: rgb(39, 38, 37);
+}
 .container{
-  max-width: 1500px
+  max-width: 1500px;
 }
 .jumbotron  {
   color:white;
   background:url(top2.jpeg); 
   background-size:cover;
   text-align: center;
+  margin-bottom: 0em;
+}
+.row{
+  margin-top: 1.5em;
 }
 .col-3{
   border:  thin solid grey; 
-  margin-right: 30px;
 }
  p{
   text-align: center;
@@ -26,12 +33,15 @@
 .btn-success{
   margin-bottom: 30px;
 }
-.form-inline{
-  margin-bottom:10px;
+form{
+  margin-bottom:30px;
 }
 .btn-primary{
   margin-left: 10px;
 }
 .table{
   text-align: center;
+}
+.table td {
+  width: 25%;
 }
