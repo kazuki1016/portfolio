@@ -1,15 +1,12 @@
 @import url('css_parts/table_parts.css');
 @import url('css_parts/mypage_parts.css');
 
-table{
-  text-align: center;
+.shop_list {
+  width: 65%;
 }
-.user_id {
-  width: 10%;
+.genre_city {
+  width: 20%;
 }
-.user_name {
-  width: 80%;
-}
-.create_date  {
+.table_buttons  {
   width: 15%;
 }

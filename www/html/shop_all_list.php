@@ -8,7 +8,6 @@ session_start();
 
 $db = get_db_connect();
 $user = get_login_user($db);
-$genre_id = get_data('genre_id');  //ユーザーがジャンルを指定してきたとき
-$shops = get_shop_data_by_genre($db, $genre_id);
+$shops = get_all_shop_data($db);
 
 include_once VIEW_PATH . 'shop_list_view.php';

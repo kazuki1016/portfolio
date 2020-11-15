@@ -1,0 +1,37 @@
+.container{
+  max-width: 900px;
+}
+.container h4, h6{
+  padding: 30px 0;
+  text-align: center;
+}
+.main_impression{
+  margin-bottom:30px;
+  border: thin solid grey;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  -o-border-radius: 1em;
+  -ms-border-radius: 1em;
+}
+
+.head{
+  border-bottom: thin solid rgb(221, 221, 221);
+}
+.btn-primary{
+  padding: 0.375rem 2.375rem;
+}
+.btn_impression{
+  padding-bottom: 30px;
+  text-align:center;
+}
+.table th{
+  font-size: 15px;
+}
+.table img{
+  max-width: 20%;
+  display: inline-block;
+}
+.title{
+  font-size: 30px;
+  font-weight: bold;
+}

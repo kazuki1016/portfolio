@@ -1,0 +1,21 @@
+.table_parts{
+  margin-bottom:30px;
+  border: thin solid rgb(223, 214, 214);
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  -o-border-radius: 1em;
+  -ms-border-radius: 1em;
+}
+.table td{
+  vertical-align:middle;
+  padding: .30em;
+} 
+.image_space{
+  max-width: 60%;
+  margin: auto;
+  border: 1px solid gray;
+  padding: 5px;
+}
+.table img{
+  max-width: 100%;
+}

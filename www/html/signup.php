@@ -12,7 +12,6 @@ if(is_logined() === true){
 $name = get_session('name');
 $password = get_session('password');
 $password_confirmation = get_session('password_confirmation');
-var_dump($_SESSION);
 
 include_once VIEW_PATH . 'signup_view.php';
 

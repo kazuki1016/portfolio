@@ -3,51 +3,12 @@
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
-
+  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'impression.css'); ?>">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
   <title>口コミ一覧</title>
   <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'admin.css'); ?>">
 </head>
-<style>
-  .container{
-    max-width: 900px;
-  }
-  .container h4, h6{
-    padding: 30px 0;
-    text-align: center;
-  }
-  .main_impression{
-    margin-bottom:30px;
-    border: thin solid grey;
-    -moz-border-radius: 1em;
-    -webkit-border-radius: 1em;
-    -o-border-radius: 1em;
-    -ms-border-radius: 1em;
-  }
-
-  .head{
-    border-bottom: thin solid rgb(221, 221, 221);
-  }
-  .btn-primary{
-    padding: 0.375rem 2.375rem;
-  }
-  .btn_impression{
-    padding-bottom: 30px;
-    text-align:center;
-  }
-  .table th{
-    font-size: 15px;
-  }
-  .table img{
-    max-width: 20%;
-    display: inline-block;
-  }
-  .title{
-    font-size: 30px;
-    font-weight: bold;
-  }
-</style>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <div class="container">
